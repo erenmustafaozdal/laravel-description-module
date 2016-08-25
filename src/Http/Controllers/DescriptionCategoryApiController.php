@@ -49,7 +49,7 @@ class DescriptionCategoryApiController extends BaseNodeController
     public function detail($id, Request $request)
     {
         return DescriptionCategory::where('id', $id)
-            ->select('has_description','has_photo')
+            ->select('has_description','has_photo','has_link','is_multiple_photo')
             ->first();
     }
 

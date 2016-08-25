@@ -114,6 +114,7 @@ return [
     | - column                          : file database column
     | - path                            : file path
     | - max_size                        : file allowed maximum size
+    | - max_file                        : maximum file count
     | - aspect_ratio                    : if file is image; crop aspect ratio
     | - mimes                           : file allowed mimes
     | - thumbnails                      : if file is image; its thumbnails options
@@ -143,6 +144,7 @@ return [
                 'column'                => 'photo.photo',
                 'path'                  => 'uploads/description',
                 'max_size'              => '5120',
+                'max_file'              => 10,
                 'aspect_ratio'          => 16/9,
                 'mimes'                 => 'jpeg,jpg,jpe,png',
                 'thumbnails' => [
