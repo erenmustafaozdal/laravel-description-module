@@ -133,7 +133,7 @@ class DescriptionCategoryController extends BaseNodeController
             'success'   => UpdateSuccess::class,
             'fail'      => UpdateFail::class
         ]);
-        return $this->updateModel($description_category, $redirect);
+        return $this->updateModel($description_category, $redirect, false);
     }
 
     /**

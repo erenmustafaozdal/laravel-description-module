@@ -7,7 +7,7 @@ ini_set('xdebug.max_nesting_level', 300);
 | Admin Routes
 |--------------------------------------------------------------------------
 */
-/*==========  Document Category Module  ==========*/
+/*==========  Description Category Module  ==========*/
 Route::group([
     'prefix' => config('laravel-description-module.url.admin_url_prefix'),
     'middleware' => config('laravel-description-module.url.middleware'),
@@ -30,7 +30,7 @@ Route::group([
 
     // category categories
     if (config('laravel-description-module.routes.admin.category_categories')) {
-        Route::group(['middleware' => 'nested_model:DocumentCategory'], function() {
+        Route::group(['middleware' => 'nested_model:DescriptionCategory'], function() {
             Route::resource(config('laravel-description-module.url.description_category') . '/{id}/' . config('laravel-description-module.url.description_category'), config('laravel-description-module.controller.description_category'), [
                 'names' => [
                     'index' => 'admin.description_category.description_category.index',
@@ -46,7 +46,7 @@ Route::group([
     }
 });
 
-/*==========  Document Module  ==========*/
+/*==========  Description Module  ==========*/
 Route::group([
     'prefix'        => config('laravel-description-module.url.admin_url_prefix'),
     'middleware'    => config('laravel-description-module.url.middleware'),
@@ -85,7 +85,7 @@ Route::group([
     // admin publish description
     if (config('laravel-description-module.routes.admin.category_descriptions_publish')) {
         Route::get(config('laravel-description-module.url.description_category') . '/{id}/' . config('laravel-description-module.url.description') . '/{' . config('laravel-description-module.url.description') . '}/publish', [
-            'middleware'        => 'related_model:DocumentCategory,descriptions',
+            'middleware'        => 'related_model:DescriptionCategory,descriptions',
             'as'                => 'admin.description_category.description.publish',
             'uses'              => config('laravel-description-module.controller.description').'@publish'
         ]);
@@ -93,7 +93,7 @@ Route::group([
     // admin not publish description
     if (config('laravel-description-module.routes.admin.category_descriptions_notPublish')) {
         Route::get(config('laravel-description-module.url.description_category') . '/{id}/' . config('laravel-description-module.url.description') . '/{' . config('laravel-description-module.url.description') . '}/not-publish', [
-            'middleware'        => 'related_model:DocumentCategory,descriptions',
+            'middleware'        => 'related_model:DescriptionCategory,descriptions',
             'as'                => 'admin.description_category.description.notPublish',
             'uses'              => config('laravel-description-module.controller.description').'@notPublish'
         ]);
@@ -101,7 +101,7 @@ Route::group([
 
     // category descriptions
     if (config('laravel-description-module.routes.admin.category_descriptions')) {
-        Route::group(['middleware' => 'related_model:DocumentCategory,descriptions'], function() {
+        Route::group(['middleware' => 'related_model:DescriptionCategory,descriptions'], function() {
             Route::resource(config('laravel-description-module.url.description_category') . '/{id}/' . config('laravel-description-module.url.description'), config('laravel-description-module.controller.description'), [
                 'names' => [
                     'index' => 'admin.description_category.description.index',
@@ -124,7 +124,7 @@ Route::group([
 | Api Routes
 |--------------------------------------------------------------------------
 */
-/*==========  Document Category Module  ==========*/
+/*==========  Description Category Module  ==========*/
 Route::group([
     'prefix'        => 'api',
     'middleware'    => config('laravel-description-module.url.middleware'),
@@ -167,14 +167,14 @@ Route::group([
     // category categories
     if (config('laravel-description-module.routes.api.category_categories_index')) {
         Route::get(config('laravel-description-module.url.description_category') . '/{id}/' . config('laravel-description-module.url.description_category'), [
-            'middleware'        => 'nested_model:DocumentCategory',
+            'middleware'        => 'nested_model:DescriptionCategory',
             'as'                => 'api.description_category.description_category.index',
             'uses'              => config('laravel-description-module.controller.description_category_api').'@index'
         ]);
     }
 });
 
-/*==========  Document Module  ==========*/
+/*==========  Description Module  ==========*/
 Route::group([
     'prefix'        => 'api',
     'middleware'    => config('laravel-description-module.url.middleware'),
@@ -229,7 +229,7 @@ Route::group([
     // category descriptions
     if (config('laravel-description-module.routes.api.category_descriptions_index')) {
         Route::get(config('laravel-description-module.url.description_category') . '/{id}/' . config('laravel-description-module.url.description'), [
-            'middleware'        => 'related_model:DocumentCategory,descriptions',
+            'middleware'        => 'related_model:DescriptionCategory,descriptions',
             'as'                => 'api.description_category.description.index',
             'uses'              => config('laravel-description-module.controller.description_api').'@index'
         ]);
