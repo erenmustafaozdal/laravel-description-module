@@ -54,7 +54,7 @@ class DescriptionApiController extends BaseController
         } else {
             $descriptions = DescriptionCategory::findOrFail($id)->descriptions();
         }
-        $descriptions->select(['id','category_id','title','description','size','is_publish','created_at']);
+        $descriptions->select(['id','category_id','title','is_publish','created_at']);
 
         // if is filter action
         if ($request->has('action') && $request->input('action') === 'filter') {
@@ -82,8 +82,7 @@ class DescriptionApiController extends BaseController
             'status'            => function($model) { return $model->is_publish; },
         ];
         $editColumns = [
-            'created_at'        => function($model) { return $model->created_at_table; },
-            'size'              => function($model) { return $model->size_table; }
+            'created_at'        => function($model) { return $model->created_at_table; }
         ];
         $removeColumns = ['is_publish','category_id'];
         return $this->getDatatables($descriptions, $addColumns, $editColumns, $removeColumns);
@@ -101,7 +100,7 @@ class DescriptionApiController extends BaseController
         $description = Description::with([
             'category' => function($query)
             {
-                return $query->select(['id','name']);
+                return $query->select(['id','name','has_description','has_photo','has_link']);
             },
             'description' => function($query)
             {
@@ -110,16 +109,39 @@ class DescriptionApiController extends BaseController
             'photo' => function($query)
             {
                 return $query->select(['id','description_id','photo']);
+            },
+            'multiplePhoto' => function($query)
+            {
+                return $query->select(['id','description_id','photo']);
+            },
+            'link' => function($query)
+            {
+                return $query->select(['id','description_id','link']);
             }
-        ])->where('id',$id)->select(['id','category_id','title','description','size','created_at','updated_at']);
+        ])->where('id',$id)->select(['id','category_id','title','created_at','updated_at']);
 
         $editColumns = [
             'size'          => function($model) { return $model->size_table; },
             'created_at'    => function($model) { return $model->created_at_table; },
             'updated_at'    => function($model) { return $model->updated_at_table; },
-            'photo.photo'   => function($model) { return !is_null($model->photo) ? $model->photo->getPhoto([], 'big', true, 'description','description') : ''; },
+            'photo.photo'   => function($model)
+            {
+                // eğer çoklu değilse fotoğraf ise
+                if (is_null($model->photo)) {
+                    return null;
+                }
+                if ($model->photo->count() === 1) {
+                    return $model->photo->getPhoto([], 'normal', true, 'description','description');
+                }
+                // eğer çoklu fotoğraf ise
+                return $model->photo->map(function($item,$key)
+                {
+                    return $item->getPhoto([], 'normal', true, 'description','description');
+                });
+            },
         ];
-        return $this->getDatatables($description, [], $editColumns, []);
+        $removeColumns = ['multiplePhoto'];
+        return $this->getDatatables($description, [], $editColumns, $removeColumns);
     }
 
     /**
@@ -147,10 +169,6 @@ class DescriptionApiController extends BaseController
      */
     public function store(ApiStoreRequest $request)
     {
-        $this->setFileOptions([config('laravel-description-module.description.uploads.file')]);
-        if ( ! $request->file('description') ) {
-            $this->setElfinderToOptions('description');
-        }
         $this->setEvents([
             'success'   => StoreSuccess::class,
             'fail'      => StoreFail::class
