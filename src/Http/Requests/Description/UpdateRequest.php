@@ -29,13 +29,20 @@ class UpdateRequest extends Request
     {
         $max_photo = config('laravel-description-module.description.uploads.photo.max_size');
         $mimes_photo = config('laravel-description-module.description.uploads.photo.mimes');
-        $photoValidation = $this->has('photo') && $this->file('photo')
+        $photoValidation = $this->has('photo') || $this->file('photo')
             ? "max:{$max_photo}|image|mimes:{$mimes_photo}"
             : "";
-        return [
+
+        $rules = [
             'category_id'       => 'required|integer',
             'title'             => 'required|max:255',
             'photo'             => $photoValidation
         ];
+
+        for($i = 0; $i < count($this->file('photo')); $i++) {
+            $rules['photo.' . $i] = $photoValidation;
+        }
+
+        return $rules;
     }
 }

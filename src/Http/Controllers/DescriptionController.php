@@ -73,12 +73,14 @@ class DescriptionController extends BaseController
             $this->setRelationRouteParam($id, config('laravel-description-module.url.description'));
         }
 
-        $this->setFileOptions(config('laravel-description-module.description.uploads'));
-        if ( ! $request->file('description') ) {
-            $this->setElfinderToOptions('description');
-        }
+        // description category alınır ve çoklu fotoğraf ilişkisi mi veya değil mi belirlenir
+        $description = DescriptionCategory::findOrFail($request->category_id);
+        $config = $description->is_multiple_photo ? 'multiple_photo' : 'photo';
         if ( $request->has('photo') && ! $request->file('photo') ) {
+            $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
             $this->setElfinderToOptions('photo.photo');
+        } else if ($request->file('photo')) {
+            $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
         }
 
         $this->setEvents([
@@ -92,6 +94,14 @@ class DescriptionController extends BaseController
                 'relation_model'    => '\App\DescriptionDescription',
                 'datas' => [
                     'description'   => $request->has('description') ? $request->description : null
+                ]
+            ],
+            [
+                'relation_type'     => 'hasOne',
+                'relation'          => 'link',
+                'relation_model'    => '\App\DescriptionLink',
+                'datas' => [
+                    'link'          => $request->has('link') ? $request->link : null
                 ]
             ]
         ]);
