@@ -216,6 +216,13 @@ Route::group([
             'uses'              => config('laravel-description-module.controller.description_api').'@notPublish'
         ]);
     }
+    // api description photo remove
+    if (config('laravel-description-module.routes.api.description_removePhoto')) {
+        Route::post('description/{' . config('laravel-description-module.url.description') . '}/remove-photo', [
+            'as'                => 'api.description.removePhoto',
+            'uses'              => config('laravel-description-module.controller.description_api').'@removePhoto'
+        ]);
+    }
     if (config('laravel-description-module.routes.api.description')) {
         Route::resource(config('laravel-description-module.url.description'), config('laravel-description-module.controller.description_api'), [
             'names' => [

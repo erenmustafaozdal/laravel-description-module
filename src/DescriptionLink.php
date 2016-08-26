@@ -21,7 +21,7 @@ class DescriptionLink extends Model
      *
      * @var array
      */
-    protected $fillable = [ 'photo' ];
+    protected $fillable = [ 'link' ];
 
     /**
      * All of the relationships to be touched.

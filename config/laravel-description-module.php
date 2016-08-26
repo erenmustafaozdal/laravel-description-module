@@ -65,8 +65,9 @@ return [
             'description_group'                 => true,                // api description group post route
             'description_detail'                => true,                // api description detail get route
             'description_fastEdit'              => true,                // api description fast edit post route
-            'description_publish'               => true,                // api description publish get route
-            'description_notPublish'            => true,                // api description not publish get route
+            'description_publish'               => true,                // api description publish post route
+            'description_notPublish'            => true,                // api description not publish post route
+            'description_removePhoto'           => true,                // api description destroy photo post route
             'category_categories_index'         => true,                // api category nested categories index get route
             'category_descriptions_index'       => true,                // api category descriptions index get route
         ]
@@ -110,10 +111,10 @@ return [
     | - relation                        : file is in the relation table and what is relation type [false|hasOne|hasMany]
     | - relation_model                  : relation model [\App\Model etc...]
     | - type                            : file type [image,file]
-    | - number_type                     : file number type [multiple,single]
     | - column                          : file database column
     | - path                            : file path
     | - max_size                        : file allowed maximum size
+    | - max_file                        : maximum file count
     | - aspect_ratio                    : if file is image; crop aspect ratio
     | - mimes                           : file allowed mimes
     | - thumbnails                      : if file is image; its thumbnails options
@@ -139,16 +140,15 @@ return [
                 'relation'              => 'hasOne',
                 'relation_model'        => '\App\DescriptionPhoto',
                 'type'                  => 'image',
-                'number_type'           => 'single',
                 'column'                => 'photo.photo',
                 'path'                  => 'uploads/description',
                 'max_size'              => '5120',
                 'aspect_ratio'          => 16/9,
                 'mimes'                 => 'jpeg,jpg,jpe,png',
                 'thumbnails' => [
-                    'small'             => [ 'width' => 35, 'height' => 35],
-                    'normal'            => [ 'width' => 300, 'height' => 300],
-                    'big'               => [ 'width' => 800, 'height' => 800],
+                    'small'             => [ 'width' => 35, 'height' => null],
+                    'normal'            => [ 'width' => 300, 'height' => null],
+                    'big'               => [ 'width' => 800, 'height' => null],
                 ]
             ],
             // description multiple photo options
@@ -156,16 +156,16 @@ return [
                 'relation'              => 'hasMany',
                 'relation_model'        => '\App\DescriptionPhoto',
                 'type'                  => 'image',
-                'number_type'           => 'single',
                 'column'                => 'multiplePhoto.photo',
                 'path'                  => 'uploads/description',
-                'max_size'              => '5120',
+                'max_size'              => '3072',
+                'max_file'              => 5,
                 'aspect_ratio'          => 16/9,
                 'mimes'                 => 'jpeg,jpg,jpe,png',
                 'thumbnails' => [
-                    'small'             => [ 'width' => 35, 'height' => 35],
-                    'normal'            => [ 'width' => 300, 'height' => 300],
-                    'big'               => [ 'width' => 800, 'height' => 800],
+                    'small'             => [ 'width' => 35, 'height' => null],
+                    'normal'            => [ 'width' => 300, 'height' => null],
+                    'big'               => [ 'width' => 800, 'height' => null],
                 ]
             ]
         ]

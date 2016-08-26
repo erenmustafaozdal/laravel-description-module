@@ -130,17 +130,20 @@ class DescriptionApiController extends BaseController
                 if (is_null($model->photo)) {
                     return null;
                 }
-                if ($model->photo->count() === 1) {
+                if ($model->multiplePhoto->count() === 1) {
                     return $model->photo->getPhoto([], 'normal', true, 'description','description');
                 }
                 // eğer çoklu fotoğraf ise
-                return $model->photo->map(function($item,$key)
+                return $model->multiplePhoto->map(function($item,$key)
                 {
-                    return $item->getPhoto([], 'normal', true, 'description','description');
+                    return [
+                        'photo'     => $item->getPhoto([], 'normal', true, 'description','description'),
+                        'id'        => $item->id
+                    ];
                 });
             },
         ];
-        $removeColumns = ['multiplePhoto'];
+        $removeColumns = ['multiple_photo'];
         return $this->getDatatables($description, [], $editColumns, $removeColumns);
     }
 
@@ -242,6 +245,21 @@ class DescriptionApiController extends BaseController
             'success'   => NotPublishSuccess::class,
             'fail'      => NotPublishFail::class
         ]);
+    }
+
+    /**
+     * remove photo of the description
+     *
+     * @param Description $description
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function removePhoto(Description $description, Request $request)
+    {
+        if ($description->multiplePhoto()->where('id',$request->id)->first()->delete()) {
+            return response()->json($this->returnData('success'));
+        }
+        return response()->json($this->returnData('error'));
     }
 
     /**

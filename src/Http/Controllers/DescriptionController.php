@@ -73,12 +73,14 @@ class DescriptionController extends BaseController
             $this->setRelationRouteParam($id, config('laravel-description-module.url.description'));
         }
 
-        $this->setFileOptions(config('laravel-description-module.description.uploads'));
-        if ( ! $request->file('description') ) {
-            $this->setElfinderToOptions('description');
-        }
+        // description category alınır ve çoklu fotoğraf ilişkisi mi veya değil mi belirlenir
+        $category = DescriptionCategory::findOrFail($request->category_id);
+        $config = $category->is_multiple_photo ? 'multiple_photo' : 'photo';
         if ( $request->has('photo') && ! $request->file('photo') ) {
+            $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
             $this->setElfinderToOptions('photo.photo');
+        } else if ($request->file('photo')) {
+            $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
         }
 
         $this->setEvents([
@@ -87,11 +89,19 @@ class DescriptionController extends BaseController
         ]);
         $this->setOperationRelation([
             [
-                'relation_type'     => 'hasOne',
-                'relation'          => 'description',
-                'relation_model'    => '\App\DescriptionDescription',
+                'relation_type' => 'hasOne',
+                'relation' => 'description',
+                'relation_model' => '\App\DescriptionDescription',
                 'datas' => [
-                    'description'   => $request->has('description') ? $request->description : null
+                    'description' => $request->has('description') ? $request->description : null
+                ]
+            ],
+            [
+                'relation_type' => 'hasOne',
+                'relation' => 'link',
+                'relation_model' => '\App\DescriptionLink',
+                'datas' => [
+                    'link' => $request->has('link') ? $request->link : null
                 ]
             ]
         ]);
@@ -153,25 +163,35 @@ class DescriptionController extends BaseController
             $this->setRelationRouteParam($firstId, config('laravel-description-module.url.description'));
         }
 
+        $config = $description->category->is_multiple_photo ? 'multiple_photo' : 'photo';
         if ( $request->has('photo') && ! $request->file('photo') ) {
-            $this->setFileOptions([config('laravel-description-module.description.uploads.photo')]);
+            $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
             $this->setElfinderToOptions('photo.photo');
+        } else if ($request->file('photo')) {
+            $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
         }
-        if ( $request->has('description')) {
-            $this->setOperationRelation([
-                [
-                    'relation_type' => 'hasOne',
-                    'relation' => 'description',
-                    'relation_model' => '\App\DescriptionDescription',
-                    'datas' => [
-                        'description' => $request->has('description') ? $request->description : null
-                    ]
-                ]
-            ]);
-        }
+
         $this->setEvents([
             'success'   => UpdateSuccess::class,
             'fail'      => UpdateFail::class
+        ]);
+        $this->setOperationRelation([
+            [
+                'relation_type' => 'hasOne',
+                'relation' => 'description',
+                'relation_model' => '\App\DescriptionDescription',
+                'datas' => [
+                    'description' => $request->has('description') ? $request->description : null
+                ]
+            ],
+            [
+                'relation_type' => 'hasOne',
+                'relation' => 'link',
+                'relation_model' => '\App\DescriptionLink',
+                'datas' => [
+                    'link' => $request->has('link') ? $request->link : null
+                ]
+            ]
         ]);
         return $this->updateModel($description,$redirect);
     }
