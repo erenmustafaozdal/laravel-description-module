@@ -36,7 +36,6 @@ class UpdateRequest extends Request
         $rules = [
             'category_id'       => 'required|integer',
             'title'             => 'required|max:255',
-            'photo'             => $photoValidation
         ];
 
         for($i = 0; $i < count($this->file('photo')); $i++) {

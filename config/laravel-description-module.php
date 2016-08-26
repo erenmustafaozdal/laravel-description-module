@@ -158,8 +158,8 @@ return [
                 'type'                  => 'image',
                 'column'                => 'multiplePhoto.photo',
                 'path'                  => 'uploads/description',
-                'max_size'              => '5120',
-                'max_file'              => 10,
+                'max_size'              => '3072',
+                'max_file'              => 5,
                 'aspect_ratio'          => 16/9,
                 'mimes'                 => 'jpeg,jpg,jpe,png',
                 'thumbnails' => [
