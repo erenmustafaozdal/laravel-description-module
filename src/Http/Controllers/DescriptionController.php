@@ -79,7 +79,7 @@ class DescriptionController extends BaseController
         if ( $request->has('photo') && ! $request->file('photo') ) {
             $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
             $this->setElfinderToOptions('photo.photo');
-        } else if ($request->file('photo')) {
+        } else if ($request->file('photo') && ! is_null($request->file('photo')[0])) {
             $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
         }
 
@@ -87,24 +87,28 @@ class DescriptionController extends BaseController
             'success'   => StoreSuccess::class,
             'fail'      => StoreFail::class
         ]);
-        $this->setOperationRelation([
-            [
+        $relation = [];
+        if ($request->has('description')) {
+            $relation[] = [
                 'relation_type' => 'hasOne',
                 'relation' => 'description',
                 'relation_model' => '\App\DescriptionDescription',
                 'datas' => [
-                    'description' => $request->has('description') ? $request->description : null
+                    'description' =>  $request->description
                 ]
-            ],
-            [
+            ];
+        }
+        if ($request->has('link')) {
+            $relation[] = [
                 'relation_type' => 'hasOne',
                 'relation' => 'link',
                 'relation_model' => '\App\DescriptionLink',
                 'datas' => [
-                    'link' => $request->has('link') ? $request->link : null
+                    'link' => $request->link
                 ]
-            ]
-        ]);
+            ];
+        }
+        $this->setOperationRelation($relation);
         return $this->storeModel(Description::class,$redirect);
     }
 
@@ -167,7 +171,7 @@ class DescriptionController extends BaseController
         if ( $request->has('photo') && ! $request->file('photo') ) {
             $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
             $this->setElfinderToOptions('photo.photo');
-        } else if ($request->file('photo')) {
+        } else if ($request->file('photo') && ! is_null($request->file('photo')[0])) {
             $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
         }
 
@@ -175,24 +179,28 @@ class DescriptionController extends BaseController
             'success'   => UpdateSuccess::class,
             'fail'      => UpdateFail::class
         ]);
-        $this->setOperationRelation([
-            [
+        $relation = [];
+        if ($request->has('description')) {
+            $relation[] = [
                 'relation_type' => 'hasOne',
                 'relation' => 'description',
                 'relation_model' => '\App\DescriptionDescription',
                 'datas' => [
-                    'description' => $request->has('description') ? $request->description : null
+                    'description' =>  $request->description
                 ]
-            ],
-            [
+            ];
+        }
+        if ($request->has('link')) {
+            $relation[] = [
                 'relation_type' => 'hasOne',
                 'relation' => 'link',
                 'relation_model' => '\App\DescriptionLink',
                 'datas' => [
-                    'link' => $request->has('link') ? $request->link : null
+                    'link' => $request->link
                 ]
-            ]
-        ]);
+            ];
+        }
+        $this->setOperationRelation($relation);
         return $this->updateModel($description,$redirect);
     }
 
