@@ -104,17 +104,6 @@ class DescriptionCategory extends Node
     */
 
     /**
-     * Get the name attribute.
-     *
-     * @param  string $name
-     * @return string
-     */
-    public function getNameAttribute($name)
-    {
-        return ucfirst_tr($name);
-    }
-
-    /**
      * Set the has_description attribute.
      *
      * @param boolean $has_description
@@ -288,47 +277,5 @@ class DescriptionCategory extends Node
     public function getIsMultiplePhotoAttribute($is_multiple_photo)
     {
         return $is_multiple_photo == 1 ? true : false;
-    }
-
-    /**
-     * Get the created_at attribute.
-     *
-     * @param  $date
-     * @return string
-     */
-    public function getCreatedAtAttribute($date)
-    {
-        return Carbon::parse($date)->format(config('laravel-description-module.date_format'));
-    }
-
-    /**
-     * Get the created_at attribute for humans.
-     *
-     * @return string
-     */
-    public function getCreatedAtForHumansAttribute()
-    {
-        return Carbon::parse($this->created_at)->diffForHumans();
-    }
-
-    /**
-     * Get the updated_at attribute.
-     *
-     * @param  $date
-     * @return string
-     */
-    public function getUpdatedAtAttribute($date)
-    {
-        return Carbon::parse($date)->format(config('laravel-description-module.date_format'));
-    }
-
-    /**
-     * Get the updated_at attribute for humans.
-     *
-     * @return string
-     */
-    public function getUpdatedAtForHumansAttribute()
-    {
-        return Carbon::parse($this->updated_at)->diffForHumans();
     }
 }
