@@ -85,7 +85,7 @@ class DescriptionCategoryApiController extends BaseNodeController
 
         return [
             'id'        => $description_category->id,
-            'name'      => $description_category->name
+            'name'      => $description_category->name_uc_first
         ];
     }
 
