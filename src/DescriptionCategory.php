@@ -3,11 +3,13 @@
 namespace ErenMustafaOzdal\LaravelDescriptionModule;
 
 use Baum\Node;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use ErenMustafaOzdal\LaravelModulesBase\Traits\ModelDataTrait;
 
 class DescriptionCategory extends Node
 {
+    use ModelDataTrait;
+
     /**
      * The database table used by the model.
      *
