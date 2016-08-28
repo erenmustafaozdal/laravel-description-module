@@ -29,17 +29,20 @@ class UpdateRequest extends Request
     {
         $max_photo = config('laravel-description-module.description.uploads.photo.max_size');
         $mimes_photo = config('laravel-description-module.description.uploads.photo.mimes');
-        $photoValidation = $this->has('photo') || $this->file('photo')
-            ? "max:{$max_photo}|image|mimes:{$mimes_photo}"
-            : "";
 
         $rules = [
             'category_id'       => 'required|integer',
             'title'             => 'required|max:255',
         ];
 
-        for($i = 0; $i < count($this->file('photo')); $i++) {
-            $rules['photo.' . $i] = $photoValidation;
+        // photo elfinder mi
+        if ($this->has('photo') && is_string($this->photo)) {
+            return $rules['photo'] = "max:{$max_photo}|image|mimes:{$mimes_photo}";
+        } else {
+            $rules['photo'] = 'array|max:' . onfig('laravel-description-module.description.uploads.photo.max_file');
+            for($i = 0; $i < count($this->file('photo')); $i++) {
+                $rules['photo.' . $i] = "elfinder_max:{$max_photo}|elfinder:{$mimes_photo}";
+            }
         }
 
         return $rules;
