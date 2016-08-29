@@ -75,6 +75,38 @@ class Description extends Model
         return $query;
     }
 
+    /**
+     * get detail data with all of the relation
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeGetDetail($query)
+    {
+        return $query->with([
+            'category' => function($query)
+            {
+                return $query->select(['id','name','has_description','has_photo','has_link']);
+            },
+            'description' => function($query)
+            {
+                return $query->select(['id','description_id','description']);
+            },
+            'photo' => function($query)
+            {
+                return $query->select(['id','description_id','photo']);
+            },
+            'multiplePhoto' => function($query)
+            {
+                return $query->select(['id','description_id','photo']);
+            },
+            'link' => function($query)
+            {
+                return $query->select(['id','description_id','link']);
+            }
+        ]);
+    }
+
 
 
 

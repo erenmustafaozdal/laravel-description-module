@@ -39,11 +39,11 @@ class StoreRequest extends Request
 
         // photo elfinder mi
         if ($this->has('photo') && is_string($this->photo)) {
-            return $rules['photo'] = "max:{$max_photo}|image|mimes:{$mimes_photo}";
+            $rules['photo'] = "elfinder_max:{$max_photo}|elfinder:{$mimes_photo}";
         } else {
-            $rules['photo'] = 'array|max:' . onfig('laravel-description-module.description.uploads.photo.max_file');
+            $rules['photo'] = 'array|max:' . config('laravel-description-module.description.uploads.multiple_photo.max_file');
             for($i = 0; $i < count($this->file('photo')); $i++) {
-                $rules['photo.' . $i] = "elfinder_max:{$max_photo}|elfinder:{$mimes_photo}";
+                $rules['photo.' . $i] = "max:{$max_photo}|image|mimes:{$mimes_photo}";
             }
         }
 

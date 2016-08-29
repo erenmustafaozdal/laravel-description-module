@@ -40,6 +40,24 @@ class DescriptionApiController extends BaseController
     ];
 
     /**
+     * default realtion urls of the model
+     *
+     * @var array
+     */
+    private $relationUrls = [
+        'edit_page' => [
+            'route'     => 'admin.document_category.document.edit',
+            'id'        => 0,
+            'model'     => ''
+        ],
+        'show' => [
+            'route'     => 'admin.document_category.document.show',
+            'id'        => 0,
+            'model'     => ''
+        ]
+    ];
+
+    /**
      * Display a listing of the resource.
      *
      * @param Request  $request
@@ -64,18 +82,11 @@ class DescriptionApiController extends BaseController
         // urls
         $addUrls = $this->urls;
         if( ! is_null($id)) {
-            $addUrls = array_merge($addUrls, [
-                'edit_page' => [
-                    'route'     => 'admin.description_category.description.edit',
-                    'id'        => $id,
-                    'model'     => config('laravel-description-module.url.description')
-                ],
-                'show' => [
-                    'route'     => 'admin.description_category.description.show',
-                    'id'        => $id,
-                    'model'     => config('laravel-description-module.url.description')
-                ]
-            ]);
+            $this->relationUrls['edit_page']['id'] = $id;
+            $this->relationUrls['edit_page']['model'] = config('laravel-description-module.url.description');
+            $this->relationUrls['show']['id'] = $id;
+            $this->relationUrls['show']['model'] = config('laravel-description-module.url.description');
+            $addUrls = array_merge($addUrls, $this->relationUrls);
         }
         $addColumns = [
             'addUrls'           => $addUrls,
@@ -97,28 +108,9 @@ class DescriptionApiController extends BaseController
      */
     public function detail($id, Request $request)
     {
-        $description = Description::with([
-            'category' => function($query)
-            {
-                return $query->select(['id','name','has_description','has_photo','has_link']);
-            },
-            'description' => function($query)
-            {
-                return $query->select(['id','description_id','description']);
-            },
-            'photo' => function($query)
-            {
-                return $query->select(['id','description_id','photo']);
-            },
-            'multiplePhoto' => function($query)
-            {
-                return $query->select(['id','description_id','photo']);
-            },
-            'link' => function($query)
-            {
-                return $query->select(['id','description_id','link']);
-            }
-        ])->where('id',$id)->select(['id','category_id','title','created_at','updated_at']);
+        $description = Description::getDetail()
+            ->where('id',$id)
+            ->select(['id','category_id','title','created_at','updated_at']);
 
         $editColumns = [
             'size'          => function($model) { return $model->size_table; },
