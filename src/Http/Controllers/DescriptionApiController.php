@@ -199,10 +199,7 @@ class DescriptionApiController extends BaseController
             'success'   => DestroySuccess::class,
             'fail'      => DestroyFail::class
         ]);
-        $result =  $this->destroyModel($description);
-        $file = new FileRepository(config('laravel-description-module.description.uploads'));
-        $file->deleteDirectories($description);
-        return $result;
+        return $this->destroyModel($description);
     }
 
     /**
