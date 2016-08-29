@@ -25,6 +25,29 @@ use ErenMustafaOzdal\LaravelDescriptionModule\Http\Requests\Description\UpdateRe
 class DescriptionController extends BaseController
 {
     /**
+     * default relation datas
+     *
+     * @var array
+     */
+    private $relations = [
+        'description' => [
+            'relation_type' => 'hasOne',
+            'relation' => 'description',
+            'relation_model' => '\App\DescriptionDescription',
+            'datas' => [
+                'description' =>  null
+            ]
+        ],
+        'link' => [
+            'relation_type' => 'hasOne',
+            'relation' => 'link',
+            'relation_model' => '\App\DescriptionLink',
+            'datas' => [
+                'link' => null
+            ]
+        ]
+    ];
+    /**
      * Display a listing of the resource.
      *
      * @param integer|null $id
@@ -76,37 +99,19 @@ class DescriptionController extends BaseController
         // description category alınır ve çoklu fotoğraf ilişkisi mi veya değil mi belirlenir
         $category = DescriptionCategory::findOrFail($request->category_id);
         $config = $category->is_multiple_photo ? 'multiple_photo' : 'photo';
-        if ( $request->has('photo') && ! $request->file('photo') ) {
-            $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
-            $this->setElfinderToOptions('photo.photo');
-        } else if ($request->file('photo') && ! is_null($request->file('photo')[0])) {
-            $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
-        }
-
+        $this->setToFileOptions($request, ['photo.photo' => $config]);
         $this->setEvents([
             'success'   => StoreSuccess::class,
             'fail'      => StoreFail::class
         ]);
         $relation = [];
         if ($request->has('description')) {
-            $relation[] = [
-                'relation_type' => 'hasOne',
-                'relation' => 'description',
-                'relation_model' => '\App\DescriptionDescription',
-                'datas' => [
-                    'description' =>  $request->description
-                ]
-            ];
+            $this->relations['description']['datas']['description'] = $request->description;
+            $relation[] = $this->relations['description'];
         }
         if ($request->has('link')) {
-            $relation[] = [
-                'relation_type' => 'hasOne',
-                'relation' => 'link',
-                'relation_model' => '\App\DescriptionLink',
-                'datas' => [
-                    'link' => $request->link
-                ]
-            ];
+            $this->relations['link']['datas']['link'] = $request->link;
+            $relation[] = $this->relations['link'];
         }
         $this->setOperationRelation($relation);
         return $this->storeModel(Description::class,$redirect);
@@ -168,37 +173,19 @@ class DescriptionController extends BaseController
         }
 
         $config = $description->category->is_multiple_photo ? 'multiple_photo' : 'photo';
-        if ( $request->has('photo') && ! $request->file('photo') ) {
-            $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
-            $this->setElfinderToOptions('photo.photo');
-        } else if ($request->file('photo') && ! is_null($request->file('photo')[0])) {
-            $this->setFileOptions([ config('laravel-description-module.description.uploads.' . $config) ]);
-        }
-
+        $this->setToFileOptions($request, ['photo.photo' => $config]);
         $this->setEvents([
             'success'   => UpdateSuccess::class,
             'fail'      => UpdateFail::class
         ]);
         $relation = [];
         if ($request->has('description')) {
-            $relation[] = [
-                'relation_type' => 'hasOne',
-                'relation' => 'description',
-                'relation_model' => '\App\DescriptionDescription',
-                'datas' => [
-                    'description' =>  $request->description
-                ]
-            ];
+            $this->relations['description']['datas']['description'] = $request->description;
+            $relation[] = $this->relations['description'];
         }
         if ($request->has('link')) {
-            $relation[] = [
-                'relation_type' => 'hasOne',
-                'relation' => 'link',
-                'relation_model' => '\App\DescriptionLink',
-                'datas' => [
-                    'link' => $request->link
-                ]
-            ];
+            $this->relations['link']['datas']['link'] = $request->link;
+            $relation[] = $this->relations['link'];
         }
         $this->setOperationRelation($relation);
         return $this->updateModel($description,$redirect);
