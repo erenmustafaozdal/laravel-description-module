@@ -71,6 +71,7 @@ class DescriptionCategoryController extends BaseNodeController
         }
         $redirect = 'description_category.description_category.index';
         $this->setRelationRouteParam($id, config('laravel-description-module.url.description_category'));
+        $this->setDefineValues(['has_description','has_photo','has_link','show_title','show_description','show_photo','show_link','is_multiple_photo']);
         return $this->storeNode(DescriptionCategory::class,$redirect);
     }
 

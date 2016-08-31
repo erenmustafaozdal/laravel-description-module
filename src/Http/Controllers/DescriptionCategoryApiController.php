@@ -61,6 +61,7 @@ class DescriptionCategoryApiController extends BaseNodeController
      */
     public function store(ApiStoreRequest $request)
     {
+        $this->setDefineValues(['has_description','has_photo','has_link','show_title','show_description','show_photo','show_link','is_multiple_photo']);
         $this->setEvents([
             'success'   => StoreSuccess::class,
             'fail'      => StoreFail::class
@@ -99,6 +100,7 @@ class DescriptionCategoryApiController extends BaseNodeController
     public function move(ApiMoveRequest $request, $id)
     {
         $description_category = DescriptionCategory::findOrFail($id);
+        $this->setDefineValues(['has_description','has_photo','has_link','show_title','show_description','show_photo','show_link','is_multiple_photo']);
         $this->setEvents([
             'success'   => MoveSuccess::class,
             'fail'      => MoveFail::class
