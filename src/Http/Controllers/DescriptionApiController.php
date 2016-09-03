@@ -46,12 +46,12 @@ class DescriptionApiController extends BaseController
      */
     private $relationUrls = [
         'edit_page' => [
-            'route'     => 'admin.document_category.document.edit',
+            'route'     => 'admin.description_category.description.edit',
             'id'        => 0,
             'model'     => ''
         ],
         'show' => [
-            'route'     => 'admin.document_category.document.show',
+            'route'     => 'admin.description_category.description.show',
             'id'        => 0,
             'model'     => ''
         ]
