@@ -123,13 +123,13 @@ class DescriptionApiController extends BaseController
                     return null;
                 }
                 if ($model->multiplePhoto->count() === 1) {
-                    return $model->photo->getPhoto([], 'normal', true, 'description','description');
+                    return $model->photo->getPhoto([], 'normal', true, 'description','description_id');
                 }
                 // eğer çoklu fotoğraf ise
                 return $model->multiplePhoto->map(function($item,$key)
                 {
                     return [
-                        'photo'     => $item->getPhoto([], 'normal', true, 'description','description'),
+                        'photo'     => $item->getPhoto([], 'normal', true, 'description','description_id'),
                         'id'        => $item->id
                     ];
                 });
