@@ -64,7 +64,6 @@ return [
             'description_category'              => true,                // api description category resource route
             'description_category_models'       => true,                // api description category model post route
             'description_category_move'         => true,                // api description category move post route
-            'description_category_detail'       => true,                // api description category detail get route
             'description'                       => true,                // api description resource route
             'description_group'                 => true,                // api description group post route
             'description_detail'                => true,                // api description detail get route
