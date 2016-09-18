@@ -4,6 +4,7 @@ namespace ErenMustafaOzdal\LaravelDescriptionModule;
 
 use Illuminate\Database\Eloquent\Model;
 use ErenMustafaOzdal\LaravelModulesBase\Traits\ModelDataTrait;
+use ErenMustafaOzdal\LaravelModulesBase\Repositories\FileRepository;
 
 class DescriptionPhoto extends Model
 {
@@ -58,4 +59,33 @@ class DescriptionPhoto extends Model
     | Model Set and Get Attributes
     |--------------------------------------------------------------------------
     */
+
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Model Events
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * model boot method
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        /**
+         * model deleted method
+         *
+         * @param $model
+         */
+        parent::deleted(function($model)
+        {
+            $file = new FileRepository(config('laravel-description-module.description.uploads'));
+            $file->deletePhoto($model, 'description');
+        });
+    }
 }
