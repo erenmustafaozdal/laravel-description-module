@@ -93,7 +93,9 @@ class DescriptionApiController extends BaseController
             'status'            => function($model) { return $model->is_publish; },
         ];
         $editColumns = [
-            'created_at'        => function($model) { return $model->created_at_table; }
+            'title'             => function($model) { return $model->title_uc_first; },
+            'created_at'        => function($model) { return $model->created_at_table; },
+            'category.name'     => function($model) { return $model->category->name_uc_first; },
         ];
         $removeColumns = ['is_publish','category_id'];
         return $this->getDatatables($descriptions, $addColumns, $editColumns, $removeColumns);
@@ -116,6 +118,8 @@ class DescriptionApiController extends BaseController
             'size'          => function($model) { return $model->size_table; },
             'created_at'    => function($model) { return $model->created_at_table; },
             'updated_at'    => function($model) { return $model->updated_at_table; },
+            'title'         => function($model) { return $model->title_uc_first; },
+            'category.name' => function($model) { return $model->category->name_uc_first; },
             'photo.photo'   => function($model)
             {
                 // eğer çoklu değilse fotoğraf ise
