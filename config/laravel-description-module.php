@@ -123,29 +123,15 @@ return [
         'default_img_path'              => 'vendor/laravel-modules-core/assets/global/img/description',
         'uploads' => [
             // description photo options
-            'photo' => [
-                'path'                  => 'uploads/description',
-                'max_size'              => '5120',
-                'aspect_ratio'          => 16/9,
-                'mimes'                 => 'jpeg,jpg,jpe,png',
-                'thumbnails' => [
-                    'small'             => [ 'width' => 35, 'height' => null],
-                    'normal'            => [ 'width' => 300, 'height' => null],
-                    'big'               => [ 'width' => 800, 'height' => null],
-                ]
-            ],
-            // description multiple photo options
-            'multiple_photo' => [
-                'path'                  => 'uploads/description',
-                'max_size'              => '3072',
-                'max_file'              => 5,
-                'aspect_ratio'          => 16/9,
-                'mimes'                 => 'jpeg,jpg,jpe,png',
-                'thumbnails' => [
-                    'small'             => [ 'width' => 35, 'height' => null],
-                    'normal'            => [ 'width' => 300, 'height' => null],
-                    'big'               => [ 'width' => 800, 'height' => null],
-                ]
+            'path'                  => 'uploads/description',
+            'max_size'              => '5120',
+            'upload_max_file'       => 5,
+            'photo_aspect_ratio'    => 16/9,
+            'photo_mimes'           => 'jpeg,jpg,jpe,png',
+            'photo_thumbnails' => [
+                'small'             => [ 'width' => 35, 'height' => null],
+                'normal'            => [ 'width' => 300, 'height' => null],
+                'big'               => [ 'width' => 800, 'height' => null],
             ]
         ]
     ],

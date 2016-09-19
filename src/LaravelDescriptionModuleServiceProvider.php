@@ -101,17 +101,26 @@ class LaravelDescriptionModuleServiceProvider extends ServiceProvider
         $config['routes'] = $default['routes'];
 
 
-        // model photo uploads
-        $config['description']['uploads']['photo']['relation'] = $default['description']['uploads']['photo']['relation'];
-        $config['description']['uploads']['photo']['relation_model'] = $default['description']['uploads']['photo']['relation_model'];
-        $config['description']['uploads']['photo']['type'] = $default['description']['uploads']['photo']['type'];
-        $config['description']['uploads']['photo']['column'] = $default['description']['uploads']['photo']['column'];
-        // model multiple photo uploads
-        $config['description']['uploads']['multiple_photo']['relation'] = $default['description']['uploads']['multiple_photo']['relation'];
-        $config['description']['uploads']['multiple_photo']['relation_model'] = $default['description']['uploads']['multiple_photo']['relation_model'];
-        $config['description']['uploads']['multiple_photo']['type'] = $default['description']['uploads']['multiple_photo']['type'];
-        $config['description']['uploads']['multiple_photo']['column'] = $default['description']['uploads']['multiple_photo']['column'];
+        $path = unsetReturn($config['description']['uploads'],'path');
+        $default['description']['uploads']['photo']['path'] = $path;
+        $default['description']['uploads']['multiple_photo']['path'] = $path;
+        $max_size = unsetReturn($config['description']['uploads'],'max_size');
+        $default['description']['uploads']['photo']['max_size'] = $max_size;
+        $default['description']['uploads']['multiple_photo']['max_size'] = $max_size;
+        $default['description']['uploads']['multiple_photo']['max_file'] = unsetReturn($config['description']['uploads'],'upload_max_file');
+        $aspect_ratio = unsetReturn($config['description']['uploads'],'photo_aspect_ratio');
+        $default['description']['uploads']['photo']['aspect_ratio'] = $aspect_ratio;
+        $default['description']['uploads']['multiple_photo']['aspect_ratio'] = $aspect_ratio;
+        $mimes = unsetReturn($config['description']['uploads'],'photo_mimes');
+        $default['description']['uploads']['photo']['mimes'] = $mimes;
+        $default['description']['uploads']['multiple_photo']['mimes'] = $mimes;
+        $thumbnails = unsetReturn($config['description']['uploads'],'photo_thumbnails');
+        $default['description']['uploads']['photo']['thumbnails'] = $thumbnails;
+        $default['description']['uploads']['multiple_photo']['thumbnails'] = $thumbnails;
+        $config['description']['uploads']['photo'] = $default['description']['uploads']['photo'];
+        $config['description']['uploads']['multiple_photo'] = $default['description']['uploads']['multiple_photo'];
 
         $this->app['config']->set('laravel-description-module', $config);
+        dd($this->app['config']->get('laravel-description-module', []));
     }
 }
