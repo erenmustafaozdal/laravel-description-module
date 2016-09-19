@@ -121,6 +121,5 @@ class LaravelDescriptionModuleServiceProvider extends ServiceProvider
         $config['description']['uploads']['multiple_photo'] = $default['description']['uploads']['multiple_photo'];
 
         $this->app['config']->set('laravel-description-module', $config);
-        dd($this->app['config']->get('laravel-description-module', []));
     }
 }
