@@ -78,15 +78,6 @@ return [
                 'relation_model'        => '\App\DescriptionPhoto',
                 'type'                  => 'image',
                 'column'                => 'photo.photo',
-                'path'                  => 'uploads/description',
-                'max_size'              => '5120',
-                'aspect_ratio'          => 16/9,
-                'mimes'                 => 'jpeg,jpg,jpe,png',
-                'thumbnails' => [
-                    'small'             => [ 'width' => 35, 'height' => null],
-                    'normal'            => [ 'width' => 300, 'height' => null],
-                    'big'               => [ 'width' => 800, 'height' => null],
-                ]
             ],
             // description multiple photo options
             'multiple_photo' => [
@@ -94,16 +85,6 @@ return [
                 'relation_model'        => '\App\DescriptionPhoto',
                 'type'                  => 'image',
                 'column'                => 'multiplePhoto.photo',
-                'path'                  => 'uploads/description',
-                'max_size'              => '3072',
-                'max_file'              => 5,
-                'aspect_ratio'          => 16/9,
-                'mimes'                 => 'jpeg,jpg,jpe,png',
-                'thumbnails' => [
-                    'small'             => [ 'width' => 35, 'height' => null],
-                    'normal'            => [ 'width' => 300, 'height' => null],
-                    'big'               => [ 'width' => 800, 'height' => null],
-                ]
             ]
         ]
     ],
