@@ -122,7 +122,6 @@ return [
     'description' => [
         'default_img_path'              => 'vendor/laravel-modules-core/assets/global/img/description',
         'uploads' => [
-            // description photo options
             'path'                  => 'uploads/description',
             'max_size'              => '5120',
             'upload_max_file'       => 5,
