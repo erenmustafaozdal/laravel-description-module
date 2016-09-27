@@ -9,7 +9,6 @@ use App\Description;
 use App\DescriptionCategory;
 
 use ErenMustafaOzdal\LaravelModulesBase\Controllers\BaseController;
-use ErenMustafaOzdal\LaravelModulesBase\Repositories\FileRepository;
 // events
 use ErenMustafaOzdal\LaravelDescriptionModule\Events\Description\StoreSuccess;
 use ErenMustafaOzdal\LaravelDescriptionModule\Events\Description\StoreFail;
