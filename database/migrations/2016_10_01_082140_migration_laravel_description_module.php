@@ -21,6 +21,16 @@ class MigrationLaravelDescriptionModule extends Migration
                 $table->integer('rgt')->nullable();
                 $table->integer('depth')->nullable();
 
+                $table->boolean('datatable_filter')->default(1);
+                $table->boolean('datatable_tools')->default(1);
+                $table->boolean('datatable_fast_add')->default(1);
+                $table->boolean('datatable_group_action')->default(1);
+                $table->boolean('datatable_detail')->default(1);
+                $table->boolean('description_is_editor')->default(0);
+                $table->boolean('config_propagation')->default(0); // ayarlar alt kategorilere yayılsın mı
+                $table->integer('photo_width')->default(0); // photo width for aspect ratio
+                $table->integer('photo_height')->default(0); // photo height for aspect ratio
+
                 // kategoriye bağlı olarak modelde açıklama, fotoğraf ve link olacak mı?
                 $table->boolean('has_description')->default(0);
                 $table->boolean('has_photo')->default(0);
@@ -40,6 +50,33 @@ class MigrationLaravelDescriptionModule extends Migration
             });
         }
 
+        if ( ! Schema::hasTable('description_category_thumbnails')) {
+            Schema::create('description_category_thumbnails', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('category_id')->unsigned();
+                $table->foreign('category_id')->references('id')->on('description_categories')->onDelete('cascade');
+
+                $table->string('slug');
+                $table->integer('photo_width')->nullable();
+                $table->integer('photo_height')->nullable();
+
+                $table->engine = 'InnoDB';
+            });
+        }
+
+        if ( ! Schema::hasTable('description_category_columns')) {
+            Schema::create('description_category_columns', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('category_id')->unsigned();
+                $table->foreign('category_id')->references('id')->on('description_categories')->onDelete('cascade');
+
+                $table->string('name');
+                $table->string('type')->default('text');
+
+                $table->engine = 'InnoDB';
+            });
+        }
+
         if ( ! Schema::hasTable('descriptions')) {
             Schema::create('descriptions', function (Blueprint $table) {
                 $table->increments('id');
@@ -49,6 +86,20 @@ class MigrationLaravelDescriptionModule extends Migration
                 $table->string('title');
                 $table->boolean('is_publish')->default(0);
                 $table->timestamps();
+
+                $table->engine = 'InnoDB';
+            });
+        }
+
+        if ( ! Schema::hasTable('description_description_category_column')) {
+            Schema::create('description_description_category_column', function (Blueprint $table) {
+                $table->integer('column_id')->unsigned()->index();
+                $table->foreign('column_id')->references('id')->on('description_category_columns')->onDelete('cascade');
+
+                $table->integer('description_id')->unsigned()->index();
+                $table->foreign('description_id')->references('id')->on('descriptions')->onDelete('cascade');
+
+                $table->string('value');
 
                 $table->engine = 'InnoDB';
             });
@@ -102,6 +153,9 @@ class MigrationLaravelDescriptionModule extends Migration
         Schema::drop('description_descriptions');
         Schema::drop('description_photos');
         Schema::drop('descriptions');
+        Schema::drop('description_description_category_column');
+        Schema::drop('description_category_columns');
+        Schema::drop('description_category_thumbnails');
         Schema::drop('description_categories');
     }
 }

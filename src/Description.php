@@ -158,6 +158,17 @@ class Description extends Model
         return $this->hasOne('App\DescriptionLink','description_id');
     }
 
+    /**
+     * Get the extra columns of the description.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function extras()
+    {
+        return $this->belongsToMany('App\DocumentExtra','description_description_category_column','description_id','column_id')
+            ->withPivot('value');
+    }
+
 
 
 

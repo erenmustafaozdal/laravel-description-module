@@ -22,7 +22,26 @@ class DescriptionCategory extends Node
      *
      * @var array
      */
-    protected $fillable = ['name','has_description','has_photo','has_link','show_title','show_description','show_photo','show_link','is_multiple_photo'];
+    protected $fillable = [
+        'name',
+        'has_description',
+        'has_photo',
+        'has_link',
+        'show_title',
+        'show_description',
+        'show_photo',
+        'show_link',
+        'is_multiple_photo',
+        'datatable_filter',
+        'datatable_tools',
+        'datatable_fast_add',
+        'datatable_group_action',
+        'datatable_detail',
+        'description_is_editor',
+        'config_propagation',
+        'photo_width',
+        'photo_height',
+    ];
 
 
 
@@ -50,6 +69,22 @@ class DescriptionCategory extends Node
     public function descriptions()
     {
         return $this->hasMany('App\Description','category_id');
+    }
+
+    /**
+     * Get the thumbnails of the description category.
+     */
+    public function thumbnails()
+    {
+        return $this->hasMany('App\DescriptionThumbnail','category_id');
+    }
+
+    /**
+     * Get the extras of the description category.
+     */
+    public function extras()
+    {
+        return $this->hasMany('App\DescriptionExtra','category_id');
     }
 
 

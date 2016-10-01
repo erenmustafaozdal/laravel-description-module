@@ -65,13 +65,13 @@ class DescriptionCategoryController extends BaseNodeController
             'success'   => StoreSuccess::class,
             'fail'      => StoreFail::class
         ]);
+        $this->setRelation($request);
         if (is_null($id)) {
             $redirect = 'index';
             return $this->storeModel(DescriptionCategory::class,$redirect);
         }
         $redirect = 'description_category.description_category.index';
         $this->setRelationRouteParam($id, config('laravel-description-module.url.description_category'));
-        $this->setDefineValues(['has_description','has_photo','has_link','show_title','show_description','show_photo','show_link','is_multiple_photo']);
         return $this->storeNode(DescriptionCategory::class,$redirect);
     }
 
@@ -134,6 +134,7 @@ class DescriptionCategoryController extends BaseNodeController
             'success'   => UpdateSuccess::class,
             'fail'      => UpdateFail::class
         ]);
+        $this->setRelation($request);
         return $this->updateModel($description_category, $redirect, false);
     }
 
