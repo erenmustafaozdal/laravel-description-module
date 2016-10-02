@@ -95,6 +95,8 @@ class DescriptionController extends BaseController
         } else {
             $redirect = 'description_category.description.index';
             $this->setRelationRouteParam($id, config('laravel-description-module.url.description'));
+            // options change with category
+            $this->changeOptions(DescriptionCategory::findOrFail($id));
         }
 
         // description category alınır ve çoklu fotoğraf ilişkisi mi veya değil mi belirlenir
@@ -171,6 +173,8 @@ class DescriptionController extends BaseController
         } else {
             $redirect = 'description_category.description.show';
             $this->setRelationRouteParam($firstId, config('laravel-description-module.url.description'));
+            // options change with category
+            $this->changeOptions(DescriptionCategory::findOrFail($id));
         }
 
         $config = $description->category->is_multiple_photo ? 'multiple_photo' : 'photo';

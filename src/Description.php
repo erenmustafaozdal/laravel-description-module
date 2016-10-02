@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use ErenMustafaOzdal\LaravelModulesBase\Traits\ModelDataTrait;
 use ErenMustafaOzdal\LaravelModulesBase\Repositories\FileRepository;
+use Illuminate\Support\Facades\Request;
 
 class Description extends Model
 {
@@ -165,7 +166,7 @@ class Description extends Model
      */
     public function extras()
     {
-        return $this->belongsToMany('App\DocumentExtra','description_description_category_column','description_id','column_id')
+        return $this->belongsToMany('App\DescriptionExtra','description_description_category_column','description_id','column_id')
             ->withPivot('value');
     }
 
@@ -195,6 +196,19 @@ class Description extends Model
     protected static function boot()
     {
         parent::boot();
+
+        /**
+         * model saved method
+         *
+         * @param $model
+         */
+        parent::saved(function($model)
+        {
+            // extra value add
+            if (Request::has('extras')) {
+                $model->extras()->sync( Request::get('extras') );
+            }
+        });
 
         /**
          * model deleted method
