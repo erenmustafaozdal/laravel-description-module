@@ -111,7 +111,7 @@ class MigrationLaravelDescriptionModule extends Migration
                 $table->integer('description_id')->unsigned();
                 $table->foreign('description_id')->references('id')->on('descriptions')->onDelete('cascade');
 
-                $table->string('description');
+                $table->longText('description');
 
                 $table->engine = 'InnoDB';
             });
@@ -152,10 +152,10 @@ class MigrationLaravelDescriptionModule extends Migration
         Schema::drop('description_links');
         Schema::drop('description_descriptions');
         Schema::drop('description_photos');
-        Schema::drop('descriptions');
         Schema::drop('description_description_category_column');
         Schema::drop('description_category_columns');
         Schema::drop('description_category_thumbnails');
+        Schema::drop('descriptions');
         Schema::drop('description_categories');
     }
 }
