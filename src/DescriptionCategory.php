@@ -3,7 +3,6 @@
 namespace ErenMustafaOzdal\LaravelDescriptionModule;
 
 use Baum\Node;
-use Illuminate\Http\Request;
 use ErenMustafaOzdal\LaravelModulesBase\Traits\ModelDataTrait;
 
 class DescriptionCategory extends Node

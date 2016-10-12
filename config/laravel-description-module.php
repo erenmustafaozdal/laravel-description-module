@@ -120,7 +120,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'description' => [
-        'default_img_path'              => 'vendor/laravel-modules-core/assets/global/img/description',
+        'default_img_path'          => 'vendor/laravel-modules-core/assets/global/img/description',
         'uploads' => [
             'path'                  => 'uploads/description',
             'max_size'              => '5120',
