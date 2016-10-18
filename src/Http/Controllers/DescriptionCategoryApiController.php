@@ -133,7 +133,7 @@ class DescriptionCategoryApiController extends BaseNodeController
     {
         if($request->has('id')) {
             $description_category = DescriptionCategory::find($request->input('id'));
-            $models = $description_category->descendantsAndSelf()->where('name', 'like', "%{$request->input('query')}%");
+            $models = $description_category->descendants()->where('name', 'like', "%{$request->input('query')}%");
 
         } else {
             $models = DescriptionCategory::where('name', 'like', "%{$request->input('query')}%");
