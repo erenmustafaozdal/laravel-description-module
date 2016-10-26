@@ -180,6 +180,40 @@ class Description extends Model
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * get photo url of the element
+     *
+     * @return string|null
+     */
+    public function getPhotoUrlAttribute()
+    {
+        if (is_null($this->photo)) {
+            return "http://placehold.it/{$this->thumbnail_sizes['width']}x{$this->thumbnail_sizes['height']}";
+        }
+        $config = array_keys(config('laravel-description-module.description.uploads.photo.thumbnails'));
+        return $this->photo->getPhoto([], $config[0], true, 'description', 'description_id');
+    }
+
+    /**
+     * get thumbnail sizes of the element
+     *
+     * @return array
+     */
+    public function getThumbnailSizesAttribute()
+    {
+        return collect(config('laravel-description-module.description.uploads.photo.thumbnails'))->first();
+    }
+
+    /**
+     * get common title of the element
+     *
+     * @return string
+     */
+    public function getCommonTitleAttribute()
+    {
+        return $this->title_uc_first;
+    }
+
 
 
 
