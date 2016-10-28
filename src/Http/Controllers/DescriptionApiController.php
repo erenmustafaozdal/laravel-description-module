@@ -69,7 +69,8 @@ class DescriptionApiController extends BaseController
         if (is_null($id)) {
             $descriptions = Description::with('category');
         } else {
-            $descriptions = DescriptionCategory::findOrFail($id)->descriptions();
+            $categories = DescriptionCategory::findOrFail($id)->getDescendantsAndSelf()->keyBy('id')->keys();
+            $descriptions = Description::whereIn('category_id',$categories);
         }
         $descriptions->select(['id','category_id','title','is_publish','created_at']);
 
