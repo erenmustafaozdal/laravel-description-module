@@ -175,7 +175,7 @@ class DescriptionController extends BaseController
             $redirect = 'description_category.description.show';
             $this->setRelationRouteParam($firstId, config('laravel-description-module.url.description'));
             // options change with category
-            $this->changeOptions(DescriptionCategory::findOrFail($id));
+            $this->changeOptions(DescriptionCategory::findOrFail($firstId));
         }
 
         $config = $description->category->is_multiple_photo ? 'multiple_photo' : 'photo';
