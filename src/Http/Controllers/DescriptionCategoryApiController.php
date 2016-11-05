@@ -28,6 +28,31 @@ use LMBCollection;
 class DescriptionCategoryApiController extends BaseNodeController
 {
     /**
+     * define values
+     *
+     * @var array
+     */
+    private $defineValues = [
+        'has_description',
+        'has_photo',
+        'has_link',
+        'show_title',
+        'show_description',
+        'show_photo',
+        'show_link',
+        'is_multiple_photo',
+        'datatable_filter',
+        'datatable_tools',
+        'datatable_fast_add',
+        'datatable_group_action',
+        'datatable_detail',
+        'description_is_editor',
+        'config_propagation',
+        'photo_width',
+        'photo_height',
+    ];
+
+    /**
      * Display a listing of the resource.
      *
      * @param  Request  $request
@@ -63,7 +88,7 @@ class DescriptionCategoryApiController extends BaseNodeController
      */
     public function store(ApiStoreRequest $request)
     {
-        $this->setDefineValues(['has_description','has_photo','has_link','show_title','show_description','show_photo','show_link','is_multiple_photo']);
+        $this->setDefineValues($this->defineValues);
         $this->setEvents([
             'success'   => StoreSuccess::class,
             'fail'      => StoreFail::class
@@ -102,7 +127,7 @@ class DescriptionCategoryApiController extends BaseNodeController
     public function move(ApiMoveRequest $request, $id)
     {
         $description_category = DescriptionCategory::findOrFail($id);
-        $this->setDefineValues(['has_description','has_photo','has_link','show_title','show_description','show_photo','show_link','is_multiple_photo']);
+        $this->setDefineValues($this->defineValues);
         $this->setEvents([
             'success'   => MoveSuccess::class,
             'fail'      => MoveFail::class
