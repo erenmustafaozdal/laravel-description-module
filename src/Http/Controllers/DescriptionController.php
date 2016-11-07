@@ -101,6 +101,7 @@ class DescriptionController extends BaseController
 
         // description category alınır ve çoklu fotoğraf ilişkisi mi veya değil mi belirlenir
         $category = DescriptionCategory::findOrFail(is_null($id) ? $request->category_id : $id);
+        $category = $category->isRoot() ? $category : $category->getRoot();
         $config = $category->is_multiple_photo ? 'multiple_photo' : 'photo';
         $this->setModuleThumbnails($category,'description',$config);
         $this->setToFileOptions($request, ['photo.photo' => $config]);
@@ -178,8 +179,9 @@ class DescriptionController extends BaseController
             $this->changeOptions(DescriptionCategory::findOrFail($firstId));
         }
 
-        $config = $description->category->is_multiple_photo ? 'multiple_photo' : 'photo';
-        $this->setModuleThumbnails($description->category,'description',$config);
+        $category = $description->category->isRoot() ? $description->category : $description->category->getRoot();
+        $config = $category->is_multiple_photo ? 'multiple_photo' : 'photo';
+        $this->setModuleThumbnails($category,'description',$config);
         $this->setToFileOptions($request, ['photo.photo' => $config]);
         $this->setEvents([
             'success'   => UpdateSuccess::class,

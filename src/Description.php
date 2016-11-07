@@ -88,7 +88,7 @@ class Description extends Model
         return $query->with([
             'category' => function($query)
             {
-                return $query->select(['id','name','has_description','has_photo','has_link']);
+                return $query->select(['id','parent_id','lft','rgt','depth','name','has_description','has_photo','has_link']);
             },
             'description' => function($query)
             {
@@ -105,7 +105,8 @@ class Description extends Model
             'link' => function($query)
             {
                 return $query->select(['id','description_id','link']);
-            }
+            },
+            'extras'
         ]);
     }
 
