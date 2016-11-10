@@ -53,6 +53,26 @@ class DescriptionCategoryApiController extends BaseNodeController
     ];
 
     /**
+     * default relation datas
+     *
+     * @var array
+     */
+    private $relations = [
+        'thumbnails' => [
+            'relation_type'     => 'hasMany',
+            'relation'          => 'thumbnails',
+            'relation_model'    => '\App\DescriptionThumbnail',
+            'datas'             => null
+        ],
+        'extras' => [
+            'relation_type'     => 'hasMany',
+            'relation'          => 'extras',
+            'relation_model'    => '\App\DescriptionExtra',
+            'datas'             => null
+        ]
+    ];
+
+    /**
      * Display a listing of the resource.
      *
      * @param  Request  $request
@@ -88,11 +108,19 @@ class DescriptionCategoryApiController extends BaseNodeController
      */
     public function store(ApiStoreRequest $request)
     {
-        $this->setDefineValues($this->defineValues);
         $this->setEvents([
             'success'   => StoreSuccess::class,
             'fail'      => StoreFail::class
         ]);
+        if ($request->parent != 0) {
+            $category = DescriptionCategory::find($request->parent);
+        } else {
+            $category = DescriptionCategory::find($request->related);
+            $category = $category->isRoot() ? $category : $category->getRoot();
+        }
+        if ($category->config_propagation) {
+            $this->setRelationDefine($category);
+        }
         return $this->storeNode(DescriptionCategory::class);
     }
 
@@ -127,11 +155,15 @@ class DescriptionCategoryApiController extends BaseNodeController
     public function move(ApiMoveRequest $request, $id)
     {
         $description_category = DescriptionCategory::findOrFail($id);
-        $this->setDefineValues($this->defineValues);
         $this->setEvents([
             'success'   => MoveSuccess::class,
             'fail'      => MoveFail::class
         ]);
+        $parent = DescriptionCategory::find($request->related);
+        $parent = $parent->isRoot() ? $parent : $parent->getRoot();
+        if ($parent->config_propagation) {
+            $this->setRelationDefine($parent);
+        }
         return $this->moveModel($description_category);
     }
 
