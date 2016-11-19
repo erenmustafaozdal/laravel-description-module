@@ -151,9 +151,13 @@ return [
             'routes' => [
                 'admin.description_category.index' => [
                     'title'         => 'Veri Tablosu',
-                    'description'   => 'Bu izne sahip olanlar veri kategorilerini veri tablosunda listeleyebilir.',
+                    'description'   => 'Bu izne sahip olanlar veri kategorileri veri tablosu sayfasına gidebilir.',
                 ],
                 'admin.description_category.create' => [
+                    'title'         => 'Ekleme Sayfası',
+                    'description'   => 'Bu izne sahip olanlar veri kategorisi ekleme sayfasına gidebilir',
+                ],
+                'admin.description_category.store' => [
                     'title'         => 'Ekleme',
                     'description'   => 'Bu izne sahip olanlar veri kategorisi ekleyebilir',
                 ],
@@ -162,6 +166,10 @@ return [
                     'description'   => 'Bu izne sahip olanlar veri kategorisi bilgilerini görüntüleyebilir',
                 ],
                 'admin.description_category.edit' => [
+                    'title'         => 'Düzenleme Sayfası',
+                    'description'   => 'Bu izne sahip olanlar veri kategorisini düzenleme sayfasına gidebilir',
+                ],
+                'admin.description_category.update' => [
                     'title'         => 'Düzenleme',
                     'description'   => 'Bu izne sahip olanlar veri kategorisini düzenleyebilir',
                 ],
@@ -169,13 +177,33 @@ return [
                     'title'         => 'Silme',
                     'description'   => 'Bu izne sahip olanlar veri kategorisini silebilir',
                 ],
+                'api.description_category.index' => [
+                    'title'         => 'Listeleme',
+                    'description'   => 'Bu izne sahip olanlar veri kategorilerini veri tablosunda listeleyebilir',
+                ],
+                'api.description_category.store' => [
+                    'title'         => 'Hızlı Ekleme',
+                    'description'   => 'Bu izne sahip olanlar veri kategorilerini veri tablosunda hızlı ekleyebilir.',
+                ],
+                'api.description_category.update' => [
+                    'title'         => 'Hızlı Düzenleme',
+                    'description'   => 'Bu izne sahip olanlar veri kategorilerini veri tablosunda hızlı düzenleyebilir.',
+                ],
+                'api.description_category.destroy' => [
+                    'title'         => 'Silme',
+                    'description'   => 'Bu izne sahip olanlar veri kategorilerini veri tablosunda silebilir',
+                ],
                 'api.description_category.models' => [
-                    'title'         => 'Rolleri Listeleme',
+                    'title'         => 'Seçim İçin Listeleme',
                     'description'   => 'Bu izne sahip olanlar veri kategorilerini bazı seçim kutularında listeleyebilir',
                 ],
                 'api.description_category.move' => [
                     'title'         => 'Taşıma',
                     'description'   => 'Bu izne sahip olanlar veri kategorilerini taşıyarak yerini değiştirebilir.',
+                ],
+                'api.description_category.detail' => [
+                    'title'         => 'Detaylar',
+                    'description'   => 'Bu izne sahip olanlar veri kategorilerinin detay bilgilerini getirebilir.',
                 ],
             ],
         ],
@@ -184,9 +212,13 @@ return [
             'routes' => [
                 'admin.description.index' => [
                     'title'         => 'Veri Tablosu',
-                    'description'   => 'Bu izne sahip olanlar verileri veri tablosunda listeleyebilir.',
+                    'description'   => 'Bu izne sahip olanlar veriler veri tablosu sayfasına gidebilir.',
                 ],
                 'admin.description.create' => [
+                    'title'         => 'Ekleme Sayfası',
+                    'description'   => 'Bu izne sahip olanlar veri ekleme sayfasına gidebilir',
+                ],
+                'admin.description.store' => [
                     'title'         => 'Ekleme',
                     'description'   => 'Bu izne sahip olanlar veri ekleyebilir',
                 ],
@@ -195,12 +227,40 @@ return [
                     'description'   => 'Bu izne sahip olanlar veri bilgilerini görüntüleyebilir',
                 ],
                 'admin.description.edit' => [
+                    'title'         => 'Düzenleme Sayfası',
+                    'description'   => 'Bu izne sahip olanlar veriyi düzenleme sayfasına gidebilir',
+                ],
+                'admin.description.update' => [
                     'title'         => 'Düzenleme',
-                    'description'   => 'Bu izne sahip olanlar veri bilgilerini düzenleyebilir',
+                    'description'   => 'Bu izne sahip olanlar veriyi düzenleyebilir',
                 ],
                 'admin.description.destroy' => [
                     'title'         => 'Silme',
                     'description'   => 'Bu izne sahip olanlar veriyi silebilir',
+                ],
+                'admin.description.publish' => [
+                    'title'         => 'Yayınlama',
+                    'description'   => 'Bu izne sahip olanlar veriyi yayınlayabilir',
+                ],
+                'admin.description.notPublish' => [
+                    'title'         => 'Yayından Kaldırma',
+                    'description'   => 'Bu izne sahip olanlar veriyi yayından kaldırabilir',
+                ],
+                'api.description.index' => [
+                    'title'         => 'Listeleme',
+                    'description'   => 'Bu izne sahip olanlar verileri veri tablosunda listeleyebilir',
+                ],
+                'api.description.store' => [
+                    'title'         => 'Hızlı Ekleme',
+                    'description'   => 'Bu izne sahip olanlar verileri veri tablosunda hızlı ekleyebilir.',
+                ],
+                'api.description.update' => [
+                    'title'         => 'Hızlı Düzenleme',
+                    'description'   => 'Bu izne sahip olanlar verileri veri tablosunda hızlı düzenleyebilir.',
+                ],
+                'api.description.destroy' => [
+                    'title'         => 'Silme',
+                    'description'   => 'Bu izne sahip olanlar verileri veri tablosunda silebilir',
                 ],
                 'api.description.group' => [
                     'title'         => 'Toplu İşlem',
@@ -209,7 +269,23 @@ return [
                 'api.description.detail' => [
                     'title'         => 'Detaylar',
                     'description'   => 'Bu izne sahip olanlar veriler tablosunda detayını görebilir.',
-                ]
+                ],
+                'api.description.fastEdit' => [
+                    'title'         => 'Hızlı Düzenleme Bilgileri',
+                    'description'   => 'Bu izne sahip olanlar veriler tablosunda hızlı düzenleme amacıyla bilgileri getirebilir.',
+                ],
+                'api.description.publish' => [
+                    'title'         => 'Hızlı Yayınlama',
+                    'description'   => 'Bu izne sahip olanlar veriler tablosunda veriyi yayınlanyabilir.',
+                ],
+                'api.description.notPublish' => [
+                    'title'         => 'Hızlı Yayından Kaldırma',
+                    'description'   => 'Bu izne sahip olanlar veriler tablosunda veriyi yayından kaldırabilir.',
+                ],
+                'api.description.removePhoto' => [
+                    'title'         => 'Fotoğraf Silme',
+                    'description'   => 'Bu izne sahip olanlar fotoğraf silebilir.',
+                ],
             ],
         ]
     ],
