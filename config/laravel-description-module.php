@@ -134,4 +134,83 @@ return [
             ]
         ]
     ],
+
+
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Permissions
+    |--------------------------------------------------------------------------
+    */
+    'permissions' => [
+        'description_category' => [
+            'title'                 => 'Veri Kategorileri',
+            'routes' => [
+                'admin.description_category.index' => [
+                    'title'         => 'Veri Tablosu',
+                    'description'   => 'Bu izne sahip olanlar veri kategorilerini veri tablosunda listeleyebilir.',
+                ],
+                'admin.description_category.create' => [
+                    'title'         => 'Ekleme',
+                    'description'   => 'Bu izne sahip olanlar veri kategorisi ekleyebilir',
+                ],
+                'admin.description_category.show' => [
+                    'title'         => 'Gösterme',
+                    'description'   => 'Bu izne sahip olanlar veri kategorisi bilgilerini görüntüleyebilir',
+                ],
+                'admin.description_category.edit' => [
+                    'title'         => 'Düzenleme',
+                    'description'   => 'Bu izne sahip olanlar veri kategorisini düzenleyebilir',
+                ],
+                'admin.description_category.destroy' => [
+                    'title'         => 'Silme',
+                    'description'   => 'Bu izne sahip olanlar veri kategorisini silebilir',
+                ],
+                'api.description_category.models' => [
+                    'title'         => 'Rolleri Listeleme',
+                    'description'   => 'Bu izne sahip olanlar veri kategorilerini bazı seçim kutularında listeleyebilir',
+                ],
+                'api.description_category.move' => [
+                    'title'         => 'Taşıma',
+                    'description'   => 'Bu izne sahip olanlar veri kategorilerini taşıyarak yerini değiştirebilir.',
+                ],
+            ],
+        ],
+        'description' => [
+            'title'                 => 'Veriler',
+            'routes' => [
+                'admin.description.index' => [
+                    'title'         => 'Veri Tablosu',
+                    'description'   => 'Bu izne sahip olanlar verileri veri tablosunda listeleyebilir.',
+                ],
+                'admin.description.create' => [
+                    'title'         => 'Ekleme',
+                    'description'   => 'Bu izne sahip olanlar veri ekleyebilir',
+                ],
+                'admin.description.show' => [
+                    'title'         => 'Gösterme',
+                    'description'   => 'Bu izne sahip olanlar veri bilgilerini görüntüleyebilir',
+                ],
+                'admin.description.edit' => [
+                    'title'         => 'Düzenleme',
+                    'description'   => 'Bu izne sahip olanlar veri bilgilerini düzenleyebilir',
+                ],
+                'admin.description.destroy' => [
+                    'title'         => 'Silme',
+                    'description'   => 'Bu izne sahip olanlar veriyi silebilir',
+                ],
+                'api.description.group' => [
+                    'title'         => 'Toplu İşlem',
+                    'description'   => 'Bu izne sahip olanlar veriler veri tablosunda toplu işlem yapabilir',
+                ],
+                'api.description.detail' => [
+                    'title'         => 'Detaylar',
+                    'description'   => 'Bu izne sahip olanlar veriler tablosunda detayını görebilir.',
+                ]
+            ],
+        ]
+    ],
 ];
