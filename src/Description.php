@@ -149,7 +149,7 @@ class Description extends Model
      */
     public function multiplePhoto()
     {
-        return $this->hasMany('App\DescriptionPhoto','description_id');
+        return $this->hasMany('App\DescriptionPhoto','description_id')->orderBy('id','desc');
     }
 
     /**
