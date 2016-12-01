@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Description;
+use Carbon\Carbon;
 
 class AddDateColumnToDescriptions extends Migration
 {
