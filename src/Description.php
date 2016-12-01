@@ -27,6 +27,7 @@ class Description extends Model
     protected $fillable = [
         'category_id',
         'title',
+        'date',
         'is_publish'
     ];
 
@@ -180,6 +181,28 @@ class Description extends Model
     | Model Set and Get Attributes
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Get the date attribute.
+     *
+     * @param $date
+     * @return string
+     */
+    public function getDateAttribute($date)
+    {
+        return Carbon::parse($date)->format('d.m.Y');
+    }
+
+    /**
+     * Set the date attribute.
+     *
+     * @param string $date
+     * @return string
+     */
+    public function setDateAttribute($date)
+    {
+        $this->attributes['date'] = Carbon::parse($date);
+    }
 
 
 
