@@ -40,7 +40,7 @@ class StoreRequest extends Request
 
         // Kampanya ve eğitim faaliyeti için zorunlu alan => tarih
         if (in_array($this->segment(3), [4,5])) { // 4: kampanyalar, 5: eğitim faaliyetleri
-            $rules['date'] = 'required|date';
+            $rules['extras.1.value'] = 'required|date';
         }
 
         // photo elfinder mi
@@ -69,12 +69,12 @@ class StoreRequest extends Request
 
         // Kampanya ve eğitim faaliyeti için zorunlu alan => tarih
         if ($this->segment(3) == 4) { // 4: kampanyalar
-            $messages['date.required'] = 'Kampanya tarihi alanı gereklidir.';
-            $messages['date.date'] = 'Kampanya tarihi alanı geçerli bir tarih olmalıdır.';
+            $messages['extras.1.value.required'] = 'Kampanya tarihi alanı gereklidir.';
+            $messages['extras.1.value.date'] = 'Kampanya tarihi alanı geçerli bir tarih olmalıdır.';
         }
         if ($this->segment(3) == 5) { // 5: eğitim faaliyetleri
-            $messages['date.required'] = 'Eğitim tarihi alanı gereklidir.';
-            $messages['date.date'] = 'Eğitim tarihi alanı geçerli bir tarih olmalıdır.';
+            $messages['extras.1.value.required'] = 'Eğitim tarihi alanı gereklidir.';
+            $messages['extras.1.value.date'] = 'Eğitim tarihi alanı geçerli bir tarih olmalıdır.';
         }
         return $messages;
     }
