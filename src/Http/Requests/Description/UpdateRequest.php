@@ -36,9 +36,11 @@ class UpdateRequest extends Request
             'title'             => 'required|max:255',
         ];
 
-        // Kampanya ve eğitim faaliyeti için zorunlu alan => tarih
-        if (in_array($this->segment(3), [4,5])) { // 4: kampanyalar, 5: eğitim faaliyetleri
+        // Kampanya ve eğitim faaliyeti için zorunlu alan => tarih --- 4: kampanyalar, 5: eğitim faaliyetleri
+        if ($this->segment(3) == config('ezelnet.seed.description_category.campaigns')) { //
             $rules['extras.1.value'] = 'required|date';
+        } else  if ($this->segment(3) == config('ezelnet.seed.description_category.education_activities')) { //
+            $rules['extras.2.value'] = 'required|date';
         }
 
         // photo elfinder mi
@@ -66,13 +68,13 @@ class UpdateRequest extends Request
         $messages = [];
 
         // Kampanya ve eğitim faaliyeti için zorunlu alan => tarih
-        if ($this->segment(3) == 4) { // 4: kampanyalar
+        if ($this->segment(3) == config('ezelnet.seed.description_category.campaigns')) { // 4: kampanyalar
             $messages['extras.1.value.required'] = 'Kampanya tarihi alanı gereklidir.';
             $messages['extras.1.value.date'] = 'Kampanya tarihi alanı geçerli bir tarih olmalıdır.';
         }
-        if ($this->segment(3) == 5) { // 5: eğitim faaliyetleri
-            $messages['extras.1.value.required'] = 'Eğitim tarihi alanı gereklidir.';
-            $messages['extras.1.value.date'] = 'Eğitim tarihi alanı geçerli bir tarih olmalıdır.';
+        if ($this->segment(3) == config('ezelnet.seed.description_category.education_activities')) { // 5: eğitim faaliyetleri
+            $messages['extras.2.value.required'] = 'Eğitim tarihi alanı gereklidir.';
+            $messages['extras.2.value.date'] = 'Eğitim tarihi alanı geçerli bir tarih olmalıdır.';
         }
         return $messages;
     }
