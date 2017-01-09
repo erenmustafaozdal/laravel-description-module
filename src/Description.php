@@ -211,7 +211,10 @@ class Description extends Model
             }
 
             // cache forget
-            if (Request::segment(3) == 8) \Cache::forget('home_mini_slider'); // proje
+            if (Request::segment(3) == 8) {
+                \Cache::forget('home_mini_slider');
+                \Cache::forget('home_creative_slider');
+            } // proje
             if (Request::segment(3) == 3) \Cache::forget('home_showcase_news'); // haberler/duyurular
             if (Request::segment(3) == 4) \Cache::forget('home_showcase_campaigns'); // kampanyalar
         });
@@ -227,7 +230,10 @@ class Description extends Model
             $file->deleteDirectories($model);
 
             // cache forget
-            if (Request::segment(3) == 8) \Cache::forget('home_mini_slider'); // proje
+            if (Request::segment(3) == 8) {
+                \Cache::forget('home_mini_slider');
+                \Cache::forget('home_creative_slider');
+            } // proje
             if (Request::segment(3) == 3) \Cache::forget('home_showcase_news'); // haberler/duyurular
             if (Request::segment(3) == 4) \Cache::forget('home_showcase_campaigns'); // kampanyalar
         });
