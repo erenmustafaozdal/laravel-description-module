@@ -271,4 +271,54 @@ class DescriptionCategory extends Node
     {
         return $is_multiple_photo == 1 ? true : false;
     }
+
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Model Events
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * model boot method
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        /**
+         * model saved method
+         *
+         * @param $model
+         */
+        parent::saved(function($model)
+        {
+            // cache forget
+            if (\Request::segment(3) == 8) {
+                \Cache::forget('home_mini_slider');
+                \Cache::forget('home_creative_slider');
+            } // proje
+            if (\Request::segment(3) == 3) \Cache::forget('home_showcase_news'); // haberler/duyurular
+            if (\Request::segment(3) == 4) \Cache::forget('home_showcase_campaigns'); // kampanyalar
+        });
+
+        /**
+         * model deleted method
+         *
+         * @param $model
+         */
+        parent::deleted(function($model)
+        {
+            // cache forget
+            if (\Request::segment(3) == 8) {
+                \Cache::forget('home_mini_slider');
+                \Cache::forget('home_creative_slider');
+            } // proje
+            if (\Request::segment(3) == 3) \Cache::forget('home_showcase_news'); // haberler/duyurular
+            if (\Request::segment(3) == 4) \Cache::forget('home_showcase_campaigns'); // kampanyalar
+        });
+    }
 }
