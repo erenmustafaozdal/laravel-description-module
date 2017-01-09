@@ -209,6 +209,11 @@ class Description extends Model
             if (Request::has('extras')) {
                 $model->extras()->sync( Request::get('extras') );
             }
+
+            // cache forget
+            if (Request::segment(3) == 8) \Cache::forget('home_mini_slider'); // proje
+            if (Request::segment(3) == 3) \Cache::forget('home_showcase_news'); // haberler/duyurular
+            if (Request::segment(3) == 4) \Cache::forget('home_showcase_campaigns'); // kampanyalar
         });
 
         /**
@@ -220,6 +225,11 @@ class Description extends Model
         {
             $file = new FileRepository(config('laravel-description-module.description.uploads'));
             $file->deleteDirectories($model);
+
+            // cache forget
+            if (Request::segment(3) == 8) \Cache::forget('home_mini_slider'); // proje
+            if (Request::segment(3) == 3) \Cache::forget('home_showcase_news'); // haberler/duyurular
+            if (Request::segment(3) == 4) \Cache::forget('home_showcase_campaigns'); // kampanyalar
         });
     }
 }
