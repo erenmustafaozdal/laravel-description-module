@@ -297,13 +297,14 @@ class DescriptionCategory extends Node
         parent::saved(function($model)
         {
             // cache forget
-            if (\Request::segment(3) == 8) {
+            if (Request::segment(3) == 1) \Cache::forget('home_references_brands'); // referanslar
+            if (Request::segment(3) == 3) \Cache::forget('home_showcase_news'); // haberler/duyurular
+            if (Request::segment(3) == 4) \Cache::forget('home_showcase_campaigns'); // kampanyalar
+            if (Request::segment(3) == 7) \Cache::forget('home_services'); // hizmetler
+            if (Request::segment(3) == 8) {
                 \Cache::forget('home_mini_slider');
                 \Cache::forget('home_creative_slider');
             } // proje
-            if (\Request::segment(3) == 3) \Cache::forget('home_showcase_news'); // haberler/duyurular
-            if (\Request::segment(3) == 4) \Cache::forget('home_showcase_campaigns'); // kampanyalar
-            if (Request::segment(3) == 7) \Cache::forget('home_services'); // hizmetler
         });
 
         /**
@@ -314,13 +315,14 @@ class DescriptionCategory extends Node
         parent::deleted(function($model)
         {
             // cache forget
-            if (\Request::segment(3) == 8) {
+            if (Request::segment(3) == 1) \Cache::forget('home_references_brands'); // referanslar
+            if (Request::segment(3) == 3) \Cache::forget('home_showcase_news'); // haberler/duyurular
+            if (Request::segment(3) == 4) \Cache::forget('home_showcase_campaigns'); // kampanyalar
+            if (Request::segment(3) == 7) \Cache::forget('home_services'); // hizmetler
+            if (Request::segment(3) == 8) {
                 \Cache::forget('home_mini_slider');
                 \Cache::forget('home_creative_slider');
             } // proje
-            if (\Request::segment(3) == 3) \Cache::forget('home_showcase_news'); // haberler/duyurular
-            if (\Request::segment(3) == 4) \Cache::forget('home_showcase_campaigns'); // kampanyalar
-            if (Request::segment(3) == 7) \Cache::forget('home_services'); // hizmetler
         });
     }
 }
