@@ -217,6 +217,7 @@ class Description extends Model
             } // proje
             if (Request::segment(3) == 3) \Cache::forget('home_showcase_news'); // haberler/duyurular
             if (Request::segment(3) == 4) \Cache::forget('home_showcase_campaigns'); // kampanyalar
+            if (Request::segment(3) == 7) \Cache::forget('home_services'); // hizmetler
         });
 
         /**
@@ -236,6 +237,7 @@ class Description extends Model
             } // proje
             if (Request::segment(3) == 3) \Cache::forget('home_showcase_news'); // haberler/duyurular
             if (Request::segment(3) == 4) \Cache::forget('home_showcase_campaigns'); // kampanyalar
+            if (Request::segment(3) == 7) \Cache::forget('home_services'); // hizmetler
         });
     }
 }
