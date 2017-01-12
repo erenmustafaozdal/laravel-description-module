@@ -39,87 +39,10 @@ class LaravelDescriptionModuleServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../config/laravel-description-module.php', 'laravel-description-module'
         );
-        // merge default configs with publish configs
-        $this->mergeDefaultConfig();
 
         $router = $this->app['router'];
         // model binding
         $router->model(config('laravel-description-module.url.description'),  'App\Description');
         $router->model(config('laravel-description-module.url.description_category'),  'App\DescriptionCategory');
-    }
-
-    /**
-     * merge default configs with publish configs
-     */
-    protected function mergeDefaultConfig()
-    {
-        $config = $this->app['config']->get('laravel-description-module', []);
-        $default = require __DIR__.'/../config/default.php';
-
-        // admin description category routes
-        $route = $config['routes']['admin']['description_category'];
-        $default['routes']['admin']['description_category'] = $route;
-        // admin description routes
-        $route = $config['routes']['admin']['description'];
-        $default['routes']['admin']['description'] = $route;
-        $default['routes']['admin']['description_publish'] = $route;
-        $default['routes']['admin']['description_notPublish'] = $route;
-        // admin sub description categories nested categories
-        $route = $config['routes']['admin']['nested_sub_categories'];
-        $default['routes']['admin']['category_categories'] = $route;
-        // admin sub description categories descriptions
-        $route = $config['routes']['admin']['sub_category_descriptions'];
-        $default['routes']['admin']['category_descriptions'] = $route;
-        $default['routes']['admin']['category_descriptions_publish'] = $route;
-        $default['routes']['admin']['category_descriptions_notPublish'] = $route;
-
-        // api description category routes
-        $apiCat = $config['routes']['api']['description_category'];
-        $default['routes']['api']['description_category'] = $apiCat;
-        // api sub description categories nested categories
-        $apiSubCat = $config['routes']['api']['nested_sub_categories'];
-        $default['routes']['api']['category_categories_index'] = $apiSubCat;
-
-        $default['routes']['api']['description_category_models'] = $apiCat || $apiSubCat;
-        $default['routes']['api']['description_category_move'] = $apiCat || $apiSubCat;
-        $default['routes']['api']['description_category_detail'] = $apiCat || $apiSubCat;
-
-        // api description routes
-        $model = $config['routes']['api']['description'];
-        $default['routes']['api']['description'] = $model;
-        // api sub description categories descriptions
-        $subModel = $config['routes']['api']['sub_category_descriptions'];
-        $default['routes']['api']['category_descriptions_index'] = $subModel;
-
-        $default['routes']['api']['description_group'] = $model || $subModel;
-        $default['routes']['api']['description_detail'] = $model || $subModel;
-        $default['routes']['api']['description_fastEdit'] = $model || $subModel;
-        $default['routes']['api']['description_publish'] = $model || $subModel;
-        $default['routes']['api']['description_notPublish'] = $model || $subModel;
-        $default['routes']['api']['description_removePhoto'] = $model || $subModel;
-
-        $config['routes'] = $default['routes'];
-
-
-        $path = unsetReturn($config['description']['uploads'],'path');
-        $default['description']['uploads']['photo']['path'] = $path;
-        $default['description']['uploads']['multiple_photo']['path'] = $path;
-        $max_size = unsetReturn($config['description']['uploads'],'max_size');
-        $default['description']['uploads']['photo']['max_size'] = $max_size;
-        $default['description']['uploads']['multiple_photo']['max_size'] = $max_size;
-        $default['description']['uploads']['multiple_photo']['max_file'] = unsetReturn($config['description']['uploads'],'upload_max_file');
-        $aspect_ratio = unsetReturn($config['description']['uploads'],'photo_aspect_ratio');
-        $default['description']['uploads']['photo']['aspect_ratio'] = $aspect_ratio;
-        $default['description']['uploads']['multiple_photo']['aspect_ratio'] = $aspect_ratio;
-        $mimes = unsetReturn($config['description']['uploads'],'photo_mimes');
-        $default['description']['uploads']['photo']['mimes'] = $mimes;
-        $default['description']['uploads']['multiple_photo']['mimes'] = $mimes;
-        $thumbnails = unsetReturn($config['description']['uploads'],'photo_thumbnails');
-        $default['description']['uploads']['photo']['thumbnails'] = $thumbnails;
-        $default['description']['uploads']['multiple_photo']['thumbnails'] = $thumbnails;
-        $config['description']['uploads']['photo'] = $default['description']['uploads']['photo'];
-        $config['description']['uploads']['multiple_photo'] = $default['description']['uploads']['multiple_photo'];
-
-        $this->app['config']->set('laravel-description-module', $config);
     }
 }
