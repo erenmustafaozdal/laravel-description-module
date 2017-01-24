@@ -263,9 +263,25 @@ class DescriptionApiController extends BaseController
      */
     public function group(Request $request)
     {
+        $this->clearCache();
         if ( $this->groupAlias(Description::class) ) {
             return response()->json(['result' => 'success']);
         }
         return response()->json(['result' => 'error']);
+    }
+
+    /**
+     * clear cache
+     *
+     * @return void
+     */
+    private function clearCache()
+    {
+        \Cache::forget('home_mini_slider');
+        \Cache::forget('home_references_brands'); // referanslar
+        \Cache::forget('home_showcase_news'); // haberler/duyurular
+        \Cache::forget('home_showcase_campaigns'); // kampanyalar
+        \Cache::forget('home_services'); // hizmetler
+        \Cache::forget('home_creative_slider'); // proje
     }
 }
