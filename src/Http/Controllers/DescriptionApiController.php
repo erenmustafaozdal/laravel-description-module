@@ -283,5 +283,14 @@ class DescriptionApiController extends BaseController
         \Cache::forget('home_showcase_campaigns'); // kampanyalar
         \Cache::forget('home_services'); // hizmetler
         \Cache::forget('home_creative_slider'); // proje
+
+        foreach(\DB::table('description_categories')->get(['id']) as $category) {
+            \Cache::forget(implode('_', ['description_categories', 'descendantsAndSelf', 'withDescriptions', $category->id]));
+            \Cache::forget(implode('_', ['category_descriptions', $category->id]));
+        }
+        foreach(\DB::table('descriptions')->get(['id']) as $description) {
+            \Cache::forget(implode('_',['description','rootCategory',$description->id]));
+            \Cache::forget(implode('_',['description',$description->id]));
+        }
     }
 }

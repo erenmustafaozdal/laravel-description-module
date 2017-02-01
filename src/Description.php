@@ -217,6 +217,21 @@ class Description extends Model
             \Cache::forget('home_showcase_campaigns'); // kampanyalar
             \Cache::forget('home_services'); // hizmetler
             \Cache::forget('home_creative_slider'); // proje
+
+
+            $category_id = $model->category->isRoot() ? $model->category_id : $model->category->getRoot()->id;
+            $categories = \DB::table('description_categories')->select('description_categories.id')
+                ->where('description_categories.id', $category_id)
+                ->join('description_categories as cat', function ($join) {
+                    $join->on('cat.lft', '>=', 'description_categories.lft')
+                        ->on('cat.lft', '<', 'description_categories.rgt');
+                })->get();
+            foreach($categories as $category) {
+                \Cache::forget(implode('_', ['description_categories', 'descendantsAndSelf', 'withDescriptions', $category->id]));
+                \Cache::forget(implode('_', ['category_descriptions', $category->id]));
+            }
+            \Cache::forget(implode('_',['description','rootCategory',$model->id]));
+            \Cache::forget(implode('_',['description',$model->id]));
         });
 
         /**
@@ -236,6 +251,21 @@ class Description extends Model
             \Cache::forget('home_showcase_campaigns'); // kampanyalar
             \Cache::forget('home_services'); // hizmetler
             \Cache::forget('home_creative_slider'); // proje
+
+
+            $category_id = $model->category->isRoot() ? $model->category_id : $model->category->getRoot()->id;
+            $categories = \DB::table('description_categories')->select('description_categories.id')
+                ->where('description_categories.id', $category_id)
+                ->join('description_categories as cat', function ($join) {
+                    $join->on('cat.lft', '>=', 'description_categories.lft')
+                        ->on('cat.lft', '<', 'description_categories.rgt');
+                })->get();
+            foreach($categories as $category) {
+                \Cache::forget(implode('_', ['description_categories', 'descendantsAndSelf', 'withDescriptions', $category->id]));
+                \Cache::forget(implode('_', ['category_descriptions', $category->id]));
+            }
+            \Cache::forget(implode('_',['description','rootCategory',$model->id]));
+            \Cache::forget(implode('_',['description',$model->id]));
         });
     }
 }

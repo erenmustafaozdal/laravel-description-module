@@ -303,6 +303,23 @@ class DescriptionCategory extends Node
             \Cache::forget('home_showcase_campaigns'); // kampanyalar
             \Cache::forget('home_services'); // hizmetler
             \Cache::forget('home_creative_slider'); // proje
+
+            $category_id = $model->isRoot() ? $model->id : $model->getRoot()->id;
+            $categories = \DB::table('description_categories')->select('description_categories.id')
+                ->where('description_categories.id', $category_id)
+                ->join('description_categories as cat', function ($join) {
+                    $join->on('cat.lft', '>=', 'description_categories.lft')
+                        ->on('cat.lft', '<', 'description_categories.rgt');
+                })->get();
+            foreach($categories as $category) {
+                \Cache::forget(implode('_', ['description_categories', $category->id]));
+                \Cache::forget(implode('_', ['description_categories', 'descendantsAndSelf', 'withDescriptions', $category->id]));
+                \Cache::forget(implode('_', ['category_descriptions', $category->id]));
+            }
+
+            foreach($model->descriptions as $description) {
+                \Cache::forget(implode('_',['description','rootCategory',$description->id]));
+            }
         });
 
         /**
@@ -319,6 +336,23 @@ class DescriptionCategory extends Node
             \Cache::forget('home_showcase_campaigns'); // kampanyalar
             \Cache::forget('home_services'); // hizmetler
             \Cache::forget('home_creative_slider'); // proje
+
+            $category_id = $model->isRoot() ? $model->id : $model->getRoot()->id;
+            $categories = \DB::table('description_categories')->select('description_categories.id')
+                ->where('description_categories.id', $category_id)
+                ->join('description_categories as cat', function ($join) {
+                    $join->on('cat.lft', '>=', 'description_categories.lft')
+                        ->on('cat.lft', '<', 'description_categories.rgt');
+                })->get();
+            foreach($categories as $category) {
+                \Cache::forget(implode('_', ['description_categories', $category->id]));
+                \Cache::forget(implode('_', ['description_categories', 'descendantsAndSelf', 'withDescriptions', $category->id]));
+                \Cache::forget(implode('_', ['category_descriptions', $category->id]));
+            }
+
+            foreach($model->descriptions as $description) {
+                \Cache::forget(implode('_',['description','rootCategory',$description->id]));
+            }
         });
 
         /**
@@ -335,6 +369,23 @@ class DescriptionCategory extends Node
             \Cache::forget('home_showcase_campaigns'); // kampanyalar
             \Cache::forget('home_services'); // hizmetler
             \Cache::forget('home_creative_slider'); // proje
+
+            $category_id = $model->isRoot() ? $model->id : $model->getRoot()->id;
+            $categories = \DB::table('description_categories')->select('description_categories.id')
+                ->where('description_categories.id', $category_id)
+                ->join('description_categories as cat', function ($join) {
+                    $join->on('cat.lft', '>=', 'description_categories.lft')
+                        ->on('cat.lft', '<', 'description_categories.rgt');
+                })->get();
+            foreach($categories as $category) {
+                \Cache::forget(implode('_', ['description_categories', $category->id]));
+                \Cache::forget(implode('_', ['description_categories', 'descendantsAndSelf', 'withDescriptions', $category->id]));
+                \Cache::forget(implode('_', ['category_descriptions', $category->id]));
+            }
+
+            foreach($model->descriptions as $description) {
+                \Cache::forget(implode('_',['description','rootCategory',$description->id]));
+            }
         });
     }
 }
