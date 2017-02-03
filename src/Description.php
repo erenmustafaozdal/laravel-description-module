@@ -220,15 +220,21 @@ class Description extends Model
 
 
             $category_id = $model->category->isRoot() ? $model->category_id : $model->category->getRoot()->id;
-            $categories = \DB::table('description_categories')->select('description_categories.id')
+            $categories = \DB::table('description_categories')->select('description_categories.id','cat.id')
                 ->where('description_categories.id', $category_id)
                 ->join('description_categories as cat', function ($join) {
                     $join->on('cat.lft', '>=', 'description_categories.lft')
                         ->on('cat.lft', '<', 'description_categories.rgt');
                 })->get();
+            $ids = array_map(function ($item) {
+                return $item->id;
+            }, $categories);
+            $totalPages = (int) ceil(\DB::table('descriptions')->whereIn('category_id',$ids)->count()/6) + 1;
             foreach($categories as $category) {
                 \Cache::forget(implode('_', ['description_categories', 'descendantsAndSelf', 'withDescriptions', $category->id]));
-                \Cache::forget(implode('_', ['category_descriptions', $category->id]));
+                for($i = 1; $i <= $totalPages; $i++) {
+                    \Cache::forget(implode('_', ['category_descriptions',$category->id,'page',$i]));
+                }
             }
             \Cache::forget(implode('_',['description','rootCategory',$model->id]));
             \Cache::forget(implode('_',['description',$model->id]));
@@ -254,15 +260,21 @@ class Description extends Model
 
 
             $category_id = $model->category->isRoot() ? $model->category_id : $model->category->getRoot()->id;
-            $categories = \DB::table('description_categories')->select('description_categories.id')
+            $categories = \DB::table('description_categories')->select('description_categories.id','cat.id')
                 ->where('description_categories.id', $category_id)
                 ->join('description_categories as cat', function ($join) {
                     $join->on('cat.lft', '>=', 'description_categories.lft')
                         ->on('cat.lft', '<', 'description_categories.rgt');
                 })->get();
+            $ids = array_map(function ($item) {
+                return $item->id;
+            }, $categories);
+            $totalPages = (int) ceil(\DB::table('descriptions')->whereIn('category_id',$ids)->count()/6) + 1;
             foreach($categories as $category) {
                 \Cache::forget(implode('_', ['description_categories', 'descendantsAndSelf', 'withDescriptions', $category->id]));
-                \Cache::forget(implode('_', ['category_descriptions', $category->id]));
+                for($i = 1; $i <= $totalPages; $i++) {
+                    \Cache::forget(implode('_', ['category_descriptions',$category->id,'page',$i]));
+                }
             }
             \Cache::forget(implode('_',['description','rootCategory',$model->id]));
             \Cache::forget(implode('_',['description',$model->id]));

@@ -305,16 +305,22 @@ class DescriptionCategory extends Node
             \Cache::forget('home_creative_slider'); // proje
 
             $category_id = $model->isRoot() ? $model->id : $model->getRoot()->id;
-            $categories = \DB::table('description_categories')->select('description_categories.id')
+            $categories = \DB::table('description_categories')->select('description_categories.id','cat.id')
                 ->where('description_categories.id', $category_id)
                 ->join('description_categories as cat', function ($join) {
                     $join->on('cat.lft', '>=', 'description_categories.lft')
                         ->on('cat.lft', '<', 'description_categories.rgt');
                 })->get();
+            $ids = array_map(function ($item) {
+                return $item->id;
+            }, $categories);
+            $totalPages = (int) ceil(\DB::table('descriptions')->whereIn('category_id',$ids)->count()/6) + 1;
             foreach($categories as $category) {
                 \Cache::forget(implode('_', ['description_categories', $category->id]));
                 \Cache::forget(implode('_', ['description_categories', 'descendantsAndSelf', 'withDescriptions', $category->id]));
-                \Cache::forget(implode('_', ['category_descriptions', $category->id]));
+                for($i = 1; $i <= $totalPages; $i++) {
+                    \Cache::forget(implode('_', ['category_descriptions',$category->id,'page',$i]));
+                }
             }
 
             foreach($model->descriptions as $description) {
@@ -338,16 +344,22 @@ class DescriptionCategory extends Node
             \Cache::forget('home_creative_slider'); // proje
 
             $category_id = $model->isRoot() ? $model->id : $model->getRoot()->id;
-            $categories = \DB::table('description_categories')->select('description_categories.id')
+            $categories = \DB::table('description_categories')->select('description_categories.id','cat.id')
                 ->where('description_categories.id', $category_id)
                 ->join('description_categories as cat', function ($join) {
                     $join->on('cat.lft', '>=', 'description_categories.lft')
                         ->on('cat.lft', '<', 'description_categories.rgt');
                 })->get();
+            $ids = array_map(function ($item) {
+                return $item->id;
+            }, $categories);
+            $totalPages = (int) ceil(\DB::table('descriptions')->whereIn('category_id',$ids)->count()/6) + 1;
             foreach($categories as $category) {
                 \Cache::forget(implode('_', ['description_categories', $category->id]));
                 \Cache::forget(implode('_', ['description_categories', 'descendantsAndSelf', 'withDescriptions', $category->id]));
-                \Cache::forget(implode('_', ['category_descriptions', $category->id]));
+                for($i = 1; $i <= $totalPages; $i++) {
+                    \Cache::forget(implode('_', ['category_descriptions',$category->id,'page',$i]));
+                }
             }
 
             foreach($model->descriptions as $description) {
@@ -371,16 +383,22 @@ class DescriptionCategory extends Node
             \Cache::forget('home_creative_slider'); // proje
 
             $category_id = $model->isRoot() ? $model->id : $model->getRoot()->id;
-            $categories = \DB::table('description_categories')->select('description_categories.id')
+            $categories = \DB::table('description_categories')->select('description_categories.id','cat.id')
                 ->where('description_categories.id', $category_id)
                 ->join('description_categories as cat', function ($join) {
                     $join->on('cat.lft', '>=', 'description_categories.lft')
                         ->on('cat.lft', '<', 'description_categories.rgt');
                 })->get();
+            $ids = array_map(function ($item) {
+                return $item->id;
+            }, $categories);
+            $totalPages = (int) ceil(\DB::table('descriptions')->whereIn('category_id',$ids)->count()/6) + 1;
             foreach($categories as $category) {
                 \Cache::forget(implode('_', ['description_categories', $category->id]));
                 \Cache::forget(implode('_', ['description_categories', 'descendantsAndSelf', 'withDescriptions', $category->id]));
-                \Cache::forget(implode('_', ['category_descriptions', $category->id]));
+                for($i = 1; $i <= $totalPages; $i++) {
+                    \Cache::forget(implode('_', ['category_descriptions',$category->id,'page',$i]));
+                }
             }
 
             foreach($model->descriptions as $description) {

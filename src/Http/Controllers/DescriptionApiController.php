@@ -284,11 +284,15 @@ class DescriptionApiController extends BaseController
         \Cache::forget('home_services'); // hizmetler
         \Cache::forget('home_creative_slider'); // proje
 
+        $descriptions = collect(\DB::table('descriptions')->get(['id']));
+        $totalPages = (int) ceil($descriptions->count()/6) + 1;
         foreach(\DB::table('description_categories')->get(['id']) as $category) {
             \Cache::forget(implode('_', ['description_categories', 'descendantsAndSelf', 'withDescriptions', $category->id]));
-            \Cache::forget(implode('_', ['category_descriptions', $category->id]));
+            for($i = 1; $i <= $totalPages; $i++) {
+                \Cache::forget(implode('_', ['category_descriptions',$category->id,'page',$i]));
+            }
         }
-        foreach(\DB::table('descriptions')->get(['id']) as $description) {
+        foreach($descriptions as $description) {
             \Cache::forget(implode('_',['description','rootCategory',$description->id]));
             \Cache::forget(implode('_',['description',$description->id]));
         }
