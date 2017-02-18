@@ -240,16 +240,14 @@ class Description extends Model
             \Cache::forget(implode('_',['description',$model->id]));
         });
 
+
         /**
          * model deleted method
          *
          * @param $model
          */
-        parent::deleted(function($model)
+        parent::deleting(function($model)
         {
-            $file = new FileRepository(config('laravel-description-module.description.uploads'));
-            $file->deleteDirectories($model);
-
             // cache forget
             \Cache::forget('home_mini_slider');
             \Cache::forget('home_references_brands'); // referanslar
@@ -278,6 +276,17 @@ class Description extends Model
             }
             \Cache::forget(implode('_',['description','rootCategory',$model->id]));
             \Cache::forget(implode('_',['description',$model->id]));
+        });
+
+        /**
+         * model deleted method
+         *
+         * @param $model
+         */
+        parent::deleted(function($model)
+        {
+            $file = new FileRepository(config('laravel-description-module.description.uploads'));
+            $file->deleteDirectories($model);
         });
     }
 }
